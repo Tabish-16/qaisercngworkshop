@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <script src="https://kit.fontawesome.com/db212db5f7.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+
+    <!-- DataTables Buttons CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.1.1/css/buttons.dataTables.min.css">
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
+    <!-- DataTables Buttons JS -->
+    <script src="https://cdn.datatables.net/buttons/2.1.1/js/dataTables.buttons.min.js"></script>
+
+    <!-- JSZip for Excel export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
+
+    <!-- pdfmake for PDF export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.70/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.70/vfs_fonts.js"></script>
+    <!-- Buttons HTML5 export -->
+    <script src="https://cdn.datatables.net/buttons/2.1.1/js/buttons.html5.min.js"></script>
+
+</head>
+    <title>Qaiser CNG Mothly Sales Report</title>
+</head>
+
+<style>
+    
+</style>
+<body>
+<nav class="bg-gray-900 dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600 z-50">
+    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+    <a href="{% url "home" %}" class="flex items-center space-x-3 rtl:space-x-reverse">
+        <img src='{% static "assets/QCW-removebg-preview.png" %}' class="h-12" alt="rafi Logo">
+    </a>
+    <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+        <div class="space-x-4">
+            <a type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" href="{% url "home" %}" >Home</a>
+            <a type="button" class="text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800" href="" >Sales Report</a>
+            <a type="button" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800" href="{% url "logout" %}" >Logout</a>
+        
+        </div>
+        <button data-collapse-toggle="navbar-sticky" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-sticky" aria-expanded="false">
+          <span class="sr-only">Open main menu</span>
+          <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+          </svg>
+      </button>
+    </div>
+    
+    </div>
+  </nav>
+
+  <div class="flex justify-center items-center mt-24">
+    <div class="w-full max-w-4xl bg-white p-8 rounded-lg shadow-md ">
+        <h2 class="text-3xl font-bold mb-6 text-gray-800 text-center font-bold">Filter By Date</h2>
+    
+        <form action="{% url "generate_report" %}" method="POST">
+            {% csrf_token %}
+            <input type="month" name='month' class="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+        </form>
+    </div>
+    </div>
+
+    <div class="flex justify-center items-center mt-10">
+        <div class="w-11/12 mt-5 border p-4 rounded">
+            <table id="example" class="display ">
+                <thead>
+                    <tr>
+                        <th>Product Name</th>                  
+                        <th>Unit Purchase Price</th>
+                        <th>Unit Sale Price</th>
+                        <th>QTY</th>
+                        <th>Total Sale Price</th>
+                        <th>Profit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Data will be populated here -->
+                   
+                    {% for item in report_data %}
+                    <tr>
+                        <td class="font-bold">{{ item.product_name }}</td>
+                        <td class="text-center">{{ item.purchase_price }}</td>
+                        <td class="text-center">{{ item.single_price }}</td>
+                        <td class="text-center">{{ item.qty }}</td>
+                        <td class="text-center">{{ item.sale_price }}</td>
+                        <td class="text-center">{{ item.profit }}</td>
+                    </tr>
+                    {% endfor %}
+                    
+                    <!-- More rows can be added here -->
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>Total<br><small>Entries: {{report_data|length }}</small></th>                  
+                        <th>{{total_unit_purchase_price}}</th>
+                        <th>{{total_unit_sale_price}}</th>
+                        <th>{{total_qty}}</th>
+                        <th>{{total_sales}}</th>
+                        <th>{{total_profit}}</th>
+                    </tr>
+                </tfoot>
+            </table>
+            <div class="mt-4 space-y-2 text-xl">
+                <h2 class="text-right text">Total Sales: {{ total_sales }} /-</h2>
+            <h2 class="text-right text">Total Profit: {{ total_profit }} /-</h2>
+            </div>
+          
+        </div>
+      </div>
+    
+    <script>
+        
+        $(document).ready(function() {
+            // Initialize DataTable with export buttons and no pagination
+            var table = $('#example').DataTable({
+                dom: 'Bfrtip', // Display export buttons
+                paging: false, // Disable pagination to show all rows
+                buttons: [
+                    {
+                        text: 'Export PDF (Landscape)',
+                        extend: 'pdfHtml5',
+                        message: '',
+                        orientation: 'landscape', // Landscape orientation for full-width
+                        exportOptions: {
+                            columns: ':visible'
+                        },
+                        customize: function (doc) {
+                            // Set page margins and font size
+                            doc.pageMargins = [10, 10, 10, 10];
+                            doc.defaultStyle.fontSize = 10;
+                            doc.styles.tableHeader.fontSize = 10;
+                            doc.styles.title.fontSize = 12;
+        
+                            // Remove spaces around the page title
+                            doc.content[0].text = doc.content[0].text.trim();
+        
+                            // Create a footer
+                            doc['footer'] = function(page, pages) {
+                                return {
+                                    columns: [
+                                        'Total Entries: ' + $('#example').DataTable().data().count(), // Total entries from DataTable
+                                        {
+                                            alignment: 'right',
+                                            text: ['Page ', { text: page.toString() }, ' of ', { text: pages.toString() }]
+                                        }
+                                    ],
+                                    margin: [10, 0]
+                                };
+                            };
+        
+                            // Styling the table layout
+                            var objLayout = {
+                                hLineWidth: function(i) { return 0.5; },
+                                vLineWidth: function(i) { return 0.5; },
+                                hLineColor: function(i) { return '#aaa'; },
+                                vLineColor: function(i) { return '#aaa'; },
+                                paddingLeft: function(i) { return 4; },
+                                paddingRight: function(i) { return 4; }
+                            };
+                            doc.content[1].layout = objLayout;
+        
+                            // Adjust table width to fill the page
+                            doc.content[1].table.widths = '*'.repeat(doc.content[1].table.body[0].length).split('');
+        
+                            // Adding the totals at the end of the table
+                            doc.content.push({
+                                margin: [0, 10, 0, 0],
+                                alignment: 'right',
+                                text: [
+                                    { text: 'Total Sales: ', bold: true }, 
+                                    { text: '{{ total_sales }} /-' },
+                                    '\n',
+                                    { text: 'Total Profit: ', bold: true }, 
+                                    { text: '{{ total_profit }} /-' }
+                                ],
+                                fontSize: 10
+                            });
+                        }
+                    }
+                ]
+            });
+        });
+        
+    </script>
+</body>
+</html>

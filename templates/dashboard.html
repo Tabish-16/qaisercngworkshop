@@ -1,0 +1,2523 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <script src="https://kit.fontawesome.com/db212db5f7.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <!-- Optional: DataTables Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap4.min.css">
+    <!-- Optional: DataTables Bootstrap JS -->
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+</head>
+<title>Oil Traders</title>
+</head>
+
+<style>
+
+</style>
+
+<body>
+    <nav
+        class="bg-gray-900 dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600 z-50">
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+            <a href="{% url 'home' %}" class="flex items-center space-x-3 rtl:space-x-reverse">
+                <img src='{% static "assets/QCW-removebg-preview.png" %}' class="h-12" alt="rafi Logo">
+            </a>
+            <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+                <div class="space-x-4">
+                    <a type="button"
+                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                        href="{% url 'home' %}">Home</a>
+                    <a type="button"
+                        class="text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800"
+                        href="{% url 'sales_report' %}">Sales Report</a>
+                    <a type="button"
+                        class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+                        href="{% url 'logout' %}">Logout</a>
+
+                </div>
+                <button data-collapse-toggle="navbar-sticky" type="button"
+                    class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                    aria-controls="navbar-sticky" aria-expanded="false">
+                    <span class="sr-only">Open main menu</span>
+                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 17 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M1 1h15M1 7h15M1 13h15" />
+                    </svg>
+                </button>
+            </div>
+
+        </div>
+    </nav>
+
+
+    <div id="msg-box" class="mt-20">
+
+    </div>
+
+    <!-- <div class="flex justify-center items-center flex-col">
+        <h1 class="text-center my-4 text-3xl text-gray-800 font-bold">Products Information</h1>
+                    <div id="oil_container" class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-4xl bg-white p-8 rounded-lg shadow-md ">
+                        <div class="flex flex-col">
+                            
+                        </div>
+    
+                        <div class="flex flex-col">
+                            
+                        </div>
+                        <div class="flex flex-col">
+                            
+                        </div>
+                    </div>
+    </div> -->
+
+    <div class="flex justify-center items-center mt-24">
+        <div class="w-full max-w-4xl bg-white p-8 rounded-lg shadow-md ">
+            <h2 class="text-3xl font-bold mb-6 text-gray-800 text-center font-bold">Oil Change Entry</h2>
+
+            <form id="my-form" action="{% url 'new_entry' %}" method="POST" onsubmit="return false">
+                {% csrf_token %}
+                <input type="hidden" placeholder="id" id="customer_id" name="customer_id" value="">
+                <input type="hidden" placeholder="id" id="body_parts_id" name="body_parts_id" value="">
+                <input type="hidden" placeholder="id" id="spare_parts_id" name="spare_parts_id" value="">
+                <input type="hidden" placeholder="id" id="cng_parts_id" name="cng_parts_id" value="">
+                <input type="hidden" placeholder="id" id="kabli_parts_id" name="kabli_parts_id" value="">
+                <input type="hidden" placeholder="id" id="silencer_id" name="silencer_id" value="">
+                <input type="hidden" placeholder="id" id="decoration_id" name="decoration_id" value="">
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Name Field -->
+
+                    <!-- <div class="flex flex-col">
+                        <label for="customers" class="text-gray-700 font-semibold mb-2">Customers</label>
+                        <select id="customers" name="customers" onchange="selectCustomer(this)"
+                            class="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option selected disabled>Select Customer</option>
+                            Add your customer options here 
+                        </select>
+                    </div> -->
+                    <div class="flex flex-col">
+                        <label for="name" class="text-gray-700 font-semibold mb-2">Name</label>
+                        <input type="text" id="name" name="name"
+                            class="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            required>
+                    </div>
+
+                    <!-- Phone Number Field -->
+                    <div class="flex flex-col">
+                        <label for="phone" class="text-gray-700 font-semibold mb-2">Phone Number</label>
+                        <input type="text" id="phone" name="phone"
+                            class="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            required>
+                    </div>
+
+                    <!-- Vehicle Type Field -->
+                    <div class="flex flex-col">
+                        <label for="vehicle_type" class="text-gray-700 font-semibold mb-2">Vehicle Type</label>
+                        <input type="text" id="vehicle_type" name="vehicle"
+                            class="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            required>
+                    </div>
+
+                    <!-- Registration Number Field -->
+                    <div class="flex flex-col">
+                        <label for="registration_num" class="text-gray-700 font-semibold mb-2">Registration
+                            Number</label>
+                        <input type="text" id="registration_num" name="registration_num"
+                            class="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            required>
+                    </div>
+
+                    <!-- Date Field -->
+                    <div class="flex flex-col">
+                        <label for="date" class="text-gray-700 font-semibold mb-2">Date</label>
+                        <input type="date" id="date" name="date"
+                            class="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            required>
+                    </div>
+
+                    <!-- Last Reading Field -->
+                    <div class="flex flex-col">
+                        <label for="last_reading" class="text-gray-700 font-semibold mb-2">Last Reading</label>
+                        <input type="number" id="last_reading" name="last_reading"
+                            class="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            >
+                    </div>
+
+                    <!-- Next Reading Field -->
+                    <div class="flex flex-col">
+                        <label for="next_reading" class="text-gray-700 font-semibold mb-2">Next Reading</label>
+                        <input type="number" id="next_reading" name="next_reading"
+                            class="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            >
+                    </div>
+
+
+                    <div class="flex flex-col">
+                        <label for="next_changing_date" class="text-gray-700 font-semibold mb-2">Next Changing
+                            Date</label>
+                        <input type="date" id="next_changing_date" name="next_changing_date"
+                            class="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            >
+                    </div>
+                    
+                </div>
+
+                <hr class="my-4 border-2 border-gray-300 ">
+                <h1 class="text-center my-4 text-3xl text-gray-800 font-bold">Engine Oil Entry</h1>
+                <button id="add_oil_row" class='bg-blue-600 p-2'>Add Row</button>
+                <div id="oil_container" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="flex flex-col">
+                        <label for="engine_oil" class="text-gray-700 font-semibold mb-2">Engine Oil</label>
+                        <select id="engine_oil" name="engine_oil" onchange='selectOilPartsPrice(this)'
+                            class="engine_oil js-example-responsive border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option disabled selected hidden>Engine Oil</option>
+                        </select>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <label for="oil_quantity" class="text-gray-700 font-semibold mb-2">Quantity</label>
+                        <input min="1" max="50" type="number" id="oil_quantity" name='oil_quantity'
+                            onchange="changeOilQty(this)"
+                            class="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="500" >
+                    </div>
+                    <div class="flex flex-col">
+                        <label data-single-price="0" id="enigne_Oil_price">0</label>
+                    </div>
+                </div>
+
+
+                <hr class="my-4 border-2 border-gray-300 ">
+                <h1 class="text-center my-4 text-3xl text-gray-800 font-bold">Oil Filter Entry</h1>
+                <button id="oil_filter_row" class='bg-blue-600 p-2'>Add Row</button>
+                <div id="oil_filter_container" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="flex flex-col">
+                        <label for="oil_filter" class="text-gray-700 font-semibold mb-2">Oil Filters</label>
+                        <select id="oil_filter" name="oil_filter" onchange='selectOilFilterPrice(this)'
+                            class="oil_filter js-example-responsive border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option disabled selected hidden>Oil Filters</option>
+                        </select>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <label for="oil_filter_quantity" class="text-gray-700 font-semibold mb-2">Quantity</label>
+                        <input min="1" max="50" type="number" id="oilfilter_quantity" name='oil_filter_quantity'
+                            onchange="changeOilFilterQty(this)"
+                            class="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="500" >
+                    </div>
+                    <div class="flex flex-col">
+                        <label data-single-price="0" id="Oilfilter_price">0</label>
+                    </div>
+                </div>
+
+
+                <hr class="my-4 border-2 border-gray-300 ">
+                <h1 class="text-center my-4 text-3xl text-gray-800 font-bold">Air Filter Entry</h1>
+                <button id="air_filter_row" class='bg-blue-600 p-2'>Add Row</button>
+                <div id="air_filter_container" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="flex flex-col">
+                        <label for="air_filter" class="text-gray-700 font-semibold mb-2">air Filters</label>
+                        <select id="air_filter" name="air_filter" onchange='selectAirFilterPrice(this)'
+                            class="air_filter js-example-responsive border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option disabled selected hidden>Air Filters</option>
+                        </select>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <label for="air_filter_quantity" class="text-gray-700 font-semibold mb-2">Quantity</label>
+                        <input min="1" max="50" type="number" id="airfilter_quantity" name='air_filter_quantity'
+                            onchange="changeAirFilterQty(this)"
+                            class="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="500" >
+                    </div>
+                    <div class="flex flex-col">
+                        <label data-single-price="0" id="airfilter_price">0</label>
+                    </div>
+                </div>
+
+
+                <hr class="my-4 border-2 border-gray-300 ">
+                <h1 class="text-center my-4 text-3xl text-gray-800 font-bold">AC Filter Entry</h1>
+                <button id="ac_filter_row" class='bg-blue-600 p-2'>Add Row</button>
+                <div id="ac_filter_container" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="flex flex-col">
+                        <label for="ac_filter" class="text-gray-700 font-semibold mb-2">AC Filters</label>
+                        <select id="ac_filter" name="ac_filter" onchange='selectACFilterPrice(this)'
+                            class="ac_filter js-example-responsive border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option disabled selected hidden>AC Filters</option>
+                        </select>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <label for="ac_filter_quantity" class="text-gray-700 font-semibold mb-2">Quantity</label>
+                        <input min="1" max="50" type="number" id="acfilter_quantity" name='ac_filter_quantity'
+                            onchange="changeACFilterQty(this)"
+                            class="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="500" >
+                    </div>
+                    <div class="flex flex-col">
+                        <label data-single-price="0" id="acfilter_price">0</label>
+                    </div>
+                </div>
+
+
+                <hr class="my-4 border-2 border-gray-300 ">
+                <h1 class="text-center my-4 text-3xl text-gray-800 font-bold">Spare Parts Entry</h1>
+                <button id="add_spare_row" class='bg-blue-600 p-2'>Add Row</button>
+                <div id="spare_container" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="flex flex-col">
+                        <label for="spare_parts" class="text-gray-700 font-semibold mb-2">Spare Parts</label>
+                        <select id="spare_parts" name="spare_parts" onchange='selectSparePartsPrice(this)'
+                            class="spare_parts js-example-responsive border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option selected disabled>Spare Parts</option>
+                        </select>
+                    </div>
+
+
+                    <div class="flex flex-col">
+                        <label for="spare_quantity" class="text-gray-700 font-semibold mb-2">Quantity</label>
+                        <input type="number" id="spare_quantity" name="spare_quantity"
+                            class="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="500" onchange="spareChangeQty(this)" >
+
+                    </div>
+
+                    <div class="flex flex-col">
+                        <label data-single-price="0" id="spare_parts_price">0</label>
+                    </div>
+
+                </div>
+
+                <hr class="my-4 border-2 border-gray-300 ">
+                <h1 class="text-center my-4 text-3xl text-gray-800 font-bold">Body Parts Entry</h1>
+                <button id="add_body_row" class='bg-blue-600 p-2'>Add Row</button>
+                <div id="body_container" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="flex flex-col">
+                        <label for="body_parts" class="text-gray-700 font-semibold mb-2">Body Parts</label>
+                        <select id="body_parts" name="body_parts" onchange='selectBodyPartsPrice(this)'
+                            class="body_parts js-example-responsive border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option disabled selected hidden>Body Parts</option>
+                        </select>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <label for="body_quantity" class="text-gray-700 font-semibold mb-2">Quantity</label>
+                        <input min="1" max="50" type="number" id="body_quantity" name='body_parts_quantity'
+                            onchange="changeBodyQty(this)"
+                            class="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="500" >
+                    </div>
+                    <div class="flex flex-col">
+                        <label data-single-price="0" id="body_parts_price">0</label>
+                    </div>
+                </div>
+
+
+                <hr class="my-4 border-2 border-gray-300 ">
+                <h1 class="text-center my-4 text-3xl text-gray-800 font-bold">CNG Parts Entry</h1>
+                <button id="add_cng_row" class='bg-blue-600 p-2'>Add Row</button>
+                <div id="cng_container" class=" grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="flex flex-col">
+                        <label for="cng_parts" class="text-gray-700 font-semibold mb-2">CNG Parts</label>
+                        <select id="cng_parts" name="cng_parts" onchange='selectcngPartsPrice(this)'
+                            class="cng_parts js-example-responsive border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option selected disabled>CNG Parts</option>
+                        </select>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <label for="cng_parts_quantity" class="text-gray-700 font-semibold mb-2">Quantity</label>
+                        <input  min="1" max="50" type="number" id="cng_quantity" name="cng_parts_quantity"
+                            class="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="500" onchange="changeCngQty(this)" >
+                    </div>
+                    <div class="flex flex-col">
+                        <label data-single-price="0" id="cng_parts_price">0</label>
+                    </div>
+                </div>
+
+                <hr class="my-4 border-2 border-gray-300 ">
+                <h1 class="text-center my-4 text-3xl text-gray-800 font-bold">Kabli Parts Entry</h1>
+                <button id="add_kabli_row" class='bg-blue-600 p-2'>Add Row</button>
+                <div id="kabli_container" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                    <div class="flex flex-col">
+                        <label for="kabli_parts" class="text-gray-700 font-semibold mb-2">Kabli Parts</label>
+                        <select id="kabli_parts" name="kabli_parts" onchange='selectKabliPartsPrice(this)'
+                            class="kabli_parts js-example-responsive border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option disabled selected hidden>Kabli Parts</option>
+                        </select>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <label for="kabli_parts_quantity" class="text-gray-700 font-semibold mb-2">Quantity</label>
+                        <input min="1" max="50" type="number" id="kabli_quantity" onchange="changeKabliQty(this)"
+                            name="kabli_parts_quantity"
+                            class="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="500" >
+                    </div>
+                    <div class="flex flex-col">
+                        <label data-single-price="0" id="kabli_parts_price">0</label>
+
+                    </div>
+                </div>
+
+
+                <hr class="my-4 border-2 border-gray-300 ">
+                <h1 class="text-center my-4 text-3xl text-gray-800 font-bold">Decoration Entry</h1>
+                <button id="add_decoration_row" class='bg-blue-600 p-2'>Add Row</button>
+                <div id="decoration_container" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="flex flex-col">
+                        <label for="decoration" class="text-gray-700 font-semibold mb-2">Decoration</label>
+                        <select id="decoration" name="decoration" onchange='selectDecorationrPartsPrice(this)'
+                            class="decoration_parts js-example-responsive border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option selected disabled>Decoration</option>
+                        </select>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <label for="decoration_quantity" class="text-gray-700 font-semibold mb-2">Decoration
+                            Quantity</label>
+                        <input type="number" id="decoration_quantity" name="decoration_quantity"
+                            class="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="500" onchange="changedecorationQty(this)" >
+                    </div>
+                    <div class="flex flex-col">
+                        <label data-single-price="0" id="decoration_parts_price">0</label>
+                    </div>
+                </div>
+
+
+                <hr class="my-4 border-2 border-gray-300 ">
+                <h1 class="text-center my-4 text-3xl text-gray-800 font-bold">Silencer Entry</h1>
+                <button id="add_silencer_row" class='bg-blue-600 p-2'>Add Row</button>
+                <div id="silencer_container" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="flex flex-col">
+                        <label for="silencer" class="text-gray-700 font-semibold mb-2">Silencer</label>
+                        <select id="silencer" name="silencer" onchange='selectsilencerPartsPrice(this)'
+                            class="silencer_parts js-example-responsive border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option selected disabled>Silencer</option>
+                        </select>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <label for="silencer_quantity" class="text-gray-700 font-semibold mb-2">Silencer
+                            Quantity</label>
+                        <input type="number" id="silencer_quantity" name="silencer_quantity"
+                            class="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="500" onchange="changeSilencerQty(this)" >
+                    </div>
+                    <div class="flex flex-col">
+                        <label data-single-price="0" id="silencer_parts_price">0</label>
+                    </div>
+                </div>
+
+
+                <hr class="my-4 border-2 border-gray-300 ">
+                <h1 class="text-center my-4 text-3xl text-gray-800 font-bold">Whole Sale Entry</h1>
+                <button id="add_wholeSale_row" class='bg-blue-600 p-2'>Add Row</button>
+                <div id="wholeSale_container" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="flex flex-col">
+                        <label for="wholeSale" class="text-gray-700 font-semibold mb-2">Whole Sale</label>
+                        <select id="wholeSale_parts" name="wholeSale_parts" onchange='selectwholeSalePartsPrice(this)'
+                            class="wholeSale_parts js-example-responsive border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option selected disabled>Whole Sale</option>
+                        </select>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <label for="wholeSale_quantity" class="text-gray-700 font-semibold mb-2">wholeSale
+                            Quantity</label>
+                        <input type="number" id="wholeSale_quantity" name="wholeSale_quantity"
+                            class="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="500" onchange="changewholeSaleQty(this)" >
+                    </div>
+                    <div class="flex flex-col">
+                        <label data-single-price="0" id="wholeSale_parts_price">0</label>
+                    </div>
+                </div>
+
+
+
+                <div class="my-6 text-center text-3xl ">
+                    <h1 class="text-gray-800"><b>Total:</b> <span id="total-price" class="text-red-600"></span></h1>
+                </div>
+
+                <div class="flex justify-end mt-6 space-x-2">
+                    <button id="" type="submit"
+                        class="bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        Submit
+                    </button>
+                    <input id="submit-form" type="submit" name="save_view" value="Save & View Report"
+                        class="bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    
+                    
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <hr class="mt-10 ">
+
+    <div id="table_div" class="flex justify-center items-center mt-10">
+        <div class="w-11/12 mt-5 border p-4 rounded">
+            <table id="example" class="display ">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Phone Number</th>
+                        <th>Vehicle Type</th>
+                        <th>Registration Number</th>
+                        <th>Changing Date</th>
+                        <th>Last Reading</th>
+                        <th>Next Reading</th>
+                        <th>Next Changing Date</th>
+                        <th>Oil Change Info</th>
+                        <th>Bill</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Data will be populated here -->
+                    {% for data in entries %}
+                    <tr class="">
+                        <td style="padding-block: 20px;" class="">{{data.id}}</td>
+                        <td style="padding-block: 20px;" class="">{{data.name}}</td>
+                        <td class="">{{data.phone_number}}</td>
+                        <td class="">{{data.vehicle}}</td>
+                        <td class="">{{data.registeration_num}}</td>
+                        <td class="">{{data.date}}</td>
+                        <td class="">{{data.last_reading}}</td>
+                        <td class="">{{data.next_reading}}</td>
+                        <td class="">{{data.next_changing_date}}</td>
+                        <td class=""><a
+                                class="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                href="{% url 'invoice_pdf' pk=data.id %}">Oil Info</a></td>
+                        <td class=""><a
+                                class="bg-blue-800 text-white py-2 px-6 rounded-lg hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                href="{% url 'bill_pdf' pk=data.id %}">Bill</a></td>
+                    </tr>
+                    {% endfor %}
+                    <!-- More rows can be added here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+        $('#example').DataTable({
+            "order": [[0, 'desc']]  // Make sure DataTables respects your server-side sorting
+        });
+    });
+    </script>
+
+
+    {% comment %} footer {% endcomment %}
+
+    <footer class="bg-gray-900 space-y-10 py-4 mt-20">
+        <nav class="flex justify-center flex-wrap gap-6 text-gray-500 font-medium">
+            <a class="hover:text-gray-900" href="#">Home</a>
+            <a class="hover:text-gray-900" href="#about">About</a>
+            <a class="hover:text-gray-900" href="#services">Services</a>
+            <a class="hover:text-gray-900" href="#contact">Contact</a>
+        </nav>
+        <div class="flex justify-center space-x-5">
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+                <img src="https://img.icons8.com/fluent/30/000000/facebook-new.png" />
+            </a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+                <img src="https://img.icons8.com/fluent/30/000000/linkedin-2.png" />
+            </a>
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+                <img src="https://img.icons8.com/fluent/30/000000/instagram-new.png" />
+            </a>
+            <a href="https://messenger.com" target="_blank" rel="noopener noreferrer">
+                <img src="https://img.icons8.com/fluent/30/000000/facebook-messenger--v2.png" />
+            </a>
+            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
+                <img src="https://img.icons8.com/fluent/30/000000/twitter.png" />
+            </a>
+        </div>
+        <div class="">
+            <p class="text-center text-gray-700 font-medium">&copy; 2022 Company Ltd. All rights reservered.</p>
+        </div>
+    </footer>
+
+
+</body>
+<script>
+
+function successMessage() {
+    var alertContainer = document.getElementById('msg-box');
+    
+    const newMessage = document.createElement("div");
+    newMessage.className = "p-4 mb-4 text-sm text-center text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800";
+    newMessage.textContent = "Form Submitted successfully!"; // Add your success message here
+    
+    // Optionally, add a close button to dismiss the alert
+    const closeButton = document.createElement("button");
+    closeButton.className = "ml-auto -mx-1.5 -my-1.5 bg-green-100 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 dark:bg-green-200 dark:text-green-800 dark:hover:bg-green-300";
+    closeButton.innerHTML = '<span class="sr-only">Close</span><svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414 1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>';
+    closeButton.onclick = function() {
+        newMessage.remove();
+    };
+
+    newMessage.appendChild(closeButton);
+    alertContainer.appendChild(newMessage);
+
+    setTimeout(() => {
+        newMessage.remove();
+    }, 3000);
+}
+
+
+
+function errorMessage() {
+    var alertContainer = document.getElementById('msg-box');
+    
+    const newMessage = document.createElement("div");
+    newMessage.className = "p-4 mb-4 text-sm text-center text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800";
+    newMessage.textContent = "An error occurred! Please try again."; // Add your error message here
+    
+    // Optionally, add a close button to dismiss the alert
+    const closeButton = document.createElement("button");
+    closeButton.className = "ml-auto -mx-1.5 -my-1.5 bg-red-100 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 dark:bg-red-200 dark:text-red-800 dark:hover:bg-red-300";
+    closeButton.innerHTML = '<span class="sr-only">Close</span><svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414 1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>';
+    closeButton.onclick = function() {
+        newMessage.remove();
+    };
+
+    newMessage.appendChild(closeButton);
+    alertContainer.appendChild(newMessage);
+
+    setTimeout(() => {
+        newMessage.remove();
+    }, 3000);
+}
+
+
+
+const loadProductMsg = async () => {
+    try {
+        const response = await fetch('/alertLowProduct/');
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+
+        const messages = data.messages;
+        if (messages && messages.length > 0) {
+            const alertContainer = document.getElementById('msg-box');
+
+            messages.forEach((message) => {
+                const newMessage = document.createElement("div");
+                newMessage.className = "p-4 mb-4 text-sm text-center text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800";
+                newMessage.textContent = message;
+
+                // Optionally, add a close button to dismiss the alert
+                const closeButton = document.createElement("button");
+                closeButton.className = "ml-auto -mx-1.5 -my-1.5 bg-red-100 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 dark:bg-red-200 dark:text-red-800 dark:hover:bg-red-300";
+                closeButton.innerHTML = '<span class="sr-only">Close</span><svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414 1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>';
+                closeButton.onclick = function() {
+                    newMessage.remove();
+                };
+
+                newMessage.appendChild(closeButton);
+                alertContainer.appendChild(newMessage);
+
+                // Optionally, remove the message after a delay
+                setTimeout(() => {
+                    newMessage.remove();
+                }, 3000);
+            });
+        }
+    } catch (error) {
+        console.error('Error fetching message:', error);
+    }
+}
+
+
+
+    const date_input = document.getElementById('date');
+    const currentDate = new Date();
+    const formattedDate = currentDate.toISOString().split('T')[0];
+    date_input.value = formattedDate;
+
+
+
+    let rowCount = 0
+
+    // function calculateTotal() {
+    //     // Get the values of the fields
+    //     const oilAmount = parseFloat(document.getElementById('oil_price').value) || 0;
+    //     const airFilter = parseFloat(document.getElementById('air_filter').value) || 0;
+    //     const acFilter = parseFloat(document.getElementById('ac_filter').value) || 0;
+    //     const oilFilter = parseFloat(document.getElementById('oil_filter').value) || 0;
+    //     // const spare_parts_price = parseFloat(document.getElementById('spare_parts_price').value) || 0;
+    //     // const body_parts_price = parseFloat(document.getElementById('body_parts_price').value) || 0;
+    //     // const cng_parts_price = parseFloat(document.getElementById('cng_parts_price').value) || 0;
+    //     // const kabli_parts_price = parseFloat(document.getElementById('kabli_parts_price').value) || 0;
+    //     // const decoration_price = parseFloat(document.getElementById('decoration_price').value) || 0;
+    //     // const wholeSale_price = parseFloat(document.getElementById('silencer_price').value) || 0;
+
+
+    //     // Calculate the total
+    //     const total = oilAmount + airFilter + acFilter + oilFilter;
+
+    //     // Update the H1 tag with the total
+    //     document.getElementById('total-price').textContent = `${total} /RS`;
+    // }
+
+    // // Attach event listeners to the input fields to trigger the calculation on input change
+    // document.getElementById('oil_price').addEventListener('input', calculateTotal);
+    // document.getElementById('air_filter').addEventListener('input', calculateTotal);
+    // document.getElementById('ac_filter').addEventListener('input', calculateTotal);
+    // document.getElementById('oil_filter').addEventListener('input', calculateTotal);
+    // // document.getElementById('spare_parts_price').addEventListener('input', calculateTotal);
+    // // document.getElementById('body_parts_price').addEventListener('input', calculateTotal);
+    // // document.getElementById('cng_parts_price').addEventListener('input', calculateTotal);
+    // // document.getElementById('kabli_parts_price').addEventListener('input', calculateTotal);
+    // // document.getElementById('decoration_price').addEventListener('input', calculateTotal);
+    // // document.getElementById('silencer_price').addEventListener('input', calculateTotal);
+
+
+    $(document).ready(function () {
+        $('select').select2();
+    });
+    $('b[role="presentation"]').hide();
+    $('.select2-selection__arrow').append('<i class="fa fa-angle-down"></i>');
+
+
+    const loadOil = (new_element)=> {
+        const all_oils = JSON.parse('{{ all_oil| safe}}')
+
+        for (const oil of all_oils) {
+            // let html = `<option value='${oil.pk}'> 
+            //             ${oil.fields.name}
+            //             </option>`;
+
+           let html = `<option value='${oil.pk}' data-price='${oil.fields.sale_price}'> 
+                        ${oil.fields.name}
+                        </option>`
+
+            $(new_element).append(html);
+        }
+    }
+
+
+    function selectOilPartsPrice(selectElement) {
+        let selectedOption = $(selectElement).find(":selected");
+        
+
+        selectedOption = selectedOption[0]
+        
+        var row_number = selectElement.id
+        row_number = row_number.split("_")
+        
+        const price = selectedOption.getAttribute('data-price');
+        const id = selectedOption.value;
+        // // console.log(selectElement)
+        // return
+
+        if (row_number.length > 2) {
+            $(`#engine-oil-price-${row_number[2]}`).text(price)
+            $(`#oil_quantity_${row_number[2]}`).val(1)
+            $(`#engine-oil-price-${row_number[2]}`).attr("data-single-price", price)
+        } else {
+            $("#enigne_Oil_price").text(price)
+            $(`#oil_quantity`).val(1)
+            $("#enigne_Oil_price").attr("data-single-price", price)
+
+        }
+    }
+    function changeOilQty(qty_element) {
+        const get_row_number = qty_element.id
+        const qty = Math.abs(qty_element.value);
+        if (qty < 1) {
+            return
+        }
+
+        let row_number_arr = get_row_number.split("_")
+        console.log("oil",row_number_arr)
+        if (row_number_arr.length > 2) {
+            old_price = $(`#engine-oil-price-${row_number_arr[2]}`).attr("data-single-price")
+            new_price = qty * old_price;
+            $(`#engine-oil-price-${row_number_arr[2]}`).text(new_price);
+        } else {
+            old_price = $("#enigne_Oil_price").attr("data-single-price")
+            new_price = qty * old_price;
+            $("#enigne_Oil_price").text(new_price);
+        }
+
+    }
+
+    function getOilSelectedItems() {
+        let oil_items = []
+        const a = $("#oil_container").children()
+        for (let i = 0; i < a.length; i = i + 3) {
+            
+            const item_name_element = a[i].children[1]
+            let item_naaam = $(item_name_element).find(":selected");
+            const item_qty_element_id = a[i + 1].children[0]
+            
+            const item_qty_element = a[i + 1].children[1]
+            const item_price_element = a[i + 2]
+           
+            if (item_qty_element.value != '' && item_qty_element.value != '0') {
+                let item = {
+                    "name": item_naaam[0].innerText.replaceAll("\n", "").replaceAll(/\s+/g, " ").trim(),
+                    "qty": parseInt(item_qty_element.value),
+                    "price": item_price_element.innerText
+
+                }
+                oil_items.push(item)
+            }
+        }
+        return oil_items
+    }
+
+
+    add_oil_row = document.getElementById('add_oil_row')
+    document.getElementById('add_oil_row').addEventListener('click', (e) => {
+        e.preventDefault();
+
+        // Ensure the container exists
+        const oil_container = document.getElementById('oil_container');
+        if (oil_container) {
+            rowCount++; // Increment rowCount
+
+            // Create new row HTML
+            const html = `
+        <div class="flex flex-col">
+            <label for="engine_oil_${rowCount}" class="text-gray-700 font-semibold mb-2">body Parts</label>
+            <select id="engine_oil_${rowCount}" name="engine_oil" class="engine_oil js-example-responsive border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <!-- Options will be loaded dynamically -->
+                <option disabled selected hidden>Engine Oil & Grades</option>
+            </select>
+        </div>
+        <div class="flex flex-col">
+            <label for="oil_quantity_${rowCount}" class="text-gray-700 font-semibold mb-2">Quantity</label>
+            <input type="number" min="1" max="50" id="oil_quantity_${rowCount}" name="oil_quantity_${rowCount}" class="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="500" >
+        </div>
+        <div class="flex flex-col">
+            <label data-single-price="0" id="engine-oil-price-${rowCount}">0</label>
+        </div>`;
+
+            // Insert new row into container
+            oil_container.insertAdjacentHTML('beforeend', html);
+
+            // Load oil parts into the newly added select element
+            const newSelect = oil_container.querySelector(`#engine_oil_${rowCount}`);
+            const oilQty = oil_container.querySelector(`#oil_quantity_${rowCount}`);
+
+            newSelect.addEventListener("change", function () {
+                
+                selectOilPartsPrice(newSelect)
+
+            })
+            oilQty.addEventListener("change", function () {
+                changeOilQty(oilQty)
+            })
+            if (newSelect) {
+
+                loadOil(newSelect);
+            }
+            // $(document).ready(function () {
+            //     $('select').select2();
+            // });
+        } else {
+            console.error('body_container not found');
+        }
+    });
+
+
+
+
+
+
+
+
+
+    const loadWholeSale = (new_element)=> {
+        const all_wholeSale = JSON.parse('{{ all_wholeSale| safe}}')
+
+        for (const oil of all_wholeSale) {
+            // let html = `<option value='${oil.pk}'> 
+            //             ${oil.fields.name}
+            //             </option>`;
+
+           let html = `<option value='${oil.pk}' data-price='${oil.fields.sale_price}'> 
+                        ${oil.fields.name}
+                        </option>`
+
+            $(new_element).append(html);
+        }
+    }
+
+
+    function selectwholeSalePartsPrice(selectElement) {
+        let selectedOption = $(selectElement).find(":selected");
+        console.log(selectedOption)
+
+        selectedOption = selectedOption[0]
+        
+        var row_number = selectElement.id
+        row_number = row_number.split("_")
+        console.log(row_number)
+        const price = selectedOption.getAttribute('data-price');
+        const id = selectedOption.value;
+        // // console.log(selectElement)
+        // return
+
+        if (row_number.length > 2) {
+            $(`#wholeSale_parts-price-${row_number[2]}`).text(price)
+            $(`#wholeSale_quantity_${row_number[2]}`).val(1)
+            $(`#wholeSale_parts-price-${row_number[2]}`).attr("data-single-price", price)
+        } else {
+            $("#wholeSale_parts_price").text(price)
+            $(`#wholeSale_quantity`).val(1)
+            $("#wholeSale_parts_price").attr("data-single-price", price)
+
+        }
+    }
+    function changewholeSaleQty(qty_element) {
+        const get_row_number = qty_element.id
+        const qty = Math.abs(qty_element.value);
+        if (qty < 1) {
+            return
+        }
+
+        let row_number_arr = get_row_number.split("_")
+        console.log("oil",row_number_arr)
+        if (row_number_arr.length > 2) {
+            old_price = $(`#wholeSale_parts-price-${row_number_arr[2]}`).attr("data-single-price")
+            new_price = qty * old_price;
+            $(`#wholeSale_parts-price-${row_number_arr[2]}`).text(new_price);
+        } else {
+            old_price = $("#wholeSale_parts_price").attr("data-single-price")
+            new_price = qty * old_price;
+            $("#wholeSale_parts_price").text(new_price);
+        }
+
+    }
+
+    function getWholeSaleSelectedItems() {
+        let wholeSale = []
+        const a = $("#wholeSale_container").children()
+        for (let i = 0; i < a.length; i = i + 3) {
+            
+            const item_name_element = a[i].children[1]
+            let item_naaam = $(item_name_element).find(":selected");
+            const item_qty_element_id = a[i + 1].children[0]
+            
+            const item_qty_element = a[i + 1].children[1]
+            const item_price_element = a[i + 2]
+           
+            if (item_qty_element.value != '' && item_qty_element.value != '0') {
+                let item = {
+                    "name": item_naaam[0].innerText.replaceAll("\n", "").replaceAll(/\s+/g, " ").trim(),
+                    "qty": parseInt(item_qty_element.value),
+                    "price": item_price_element.innerText
+
+                }
+                wholeSale.push(item)
+            }
+        }
+        return wholeSale
+    }
+
+
+    add_wholeSale_row = document.getElementById('add_wholeSale_row')
+    document.getElementById('add_wholeSale_row').addEventListener('click', (e) => {
+        e.preventDefault();
+
+        // Ensure the container exists
+        const wholeSale_container = document.getElementById('wholeSale_container');
+        if (wholeSale_container) {
+            rowCount++; // Increment rowCount
+
+            // Create new row HTML
+            const html = `
+        <div class="flex flex-col">
+            <label for="wholeSale_parts_${rowCount}" class="text-gray-700 font-semibold mb-2">body Parts</label>
+            <select id="wholeSale_parts_${rowCount}" name="wholeSale" class="wholeSale_parts js-example-responsive border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <!-- Options will be loaded dynamically -->
+                <option disabled selected hidden>Whole Sale</option>
+            </select>
+        </div>
+        <div class="flex flex-col">
+            <label for="wholeSale_quantity_${rowCount}" class="text-gray-700 font-semibold mb-2">Quantity</label>
+            <input type="number" min="1" max="50" id="wholeSale_quantity_${rowCount}" name="wholeSale_quantity_${rowCount}" class="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="500" >
+        </div>
+        <div class="flex flex-col">
+            <label data-single-price="0" id="wholeSale_parts-price-${rowCount}">0</label>
+        </div>`;
+
+            // Insert new row into container
+            wholeSale_container.insertAdjacentHTML('beforeend', html);
+
+            // Load oil parts into the newly added select element
+            const newSelect = wholeSale_container.querySelector(`#wholeSale_parts_${rowCount}`);
+            const wholeSaleQty = wholeSale_container.querySelector(`#wholeSale_quantity_${rowCount}`);
+
+            newSelect.addEventListener("change", function () {
+                
+                selectwholeSalePartsPrice(newSelect)
+
+            })
+            wholeSaleQty.addEventListener("change", function () {
+                changewholeSaleQty(wholeSaleQty)
+            })
+            if (newSelect) {
+
+                loadWholeSale(newSelect);
+            }
+            // $(document).ready(function () {
+            //     $('select').select2();
+            // });
+        } else {
+            console.error('body_container not found');
+        }
+    });
+
+
+
+    const loadOilFilter = (new_element)=> {
+        const all_oil_filter = JSON.parse('{{ all_oil_filter| safe}}')
+
+        for (const oil of all_oil_filter) {
+            // let html = `<option value='${oil.pk}'> 
+            //             ${oil.fields.name}
+            //             </option>`;
+
+           let html = `<option value='${oil.pk}' data-price='${oil.fields.sale_price}'> 
+                        ${oil.fields.name}
+                        </option>`
+
+            $(new_element).append(html);
+        }
+    }
+
+
+    function selectOilFilterPrice(selectElement) {
+        let selectedOption = $(selectElement).find(":selected");
+        console.log(selectedOption)
+
+        selectedOption = selectedOption[0]
+        
+        var row_number = selectElement.id
+        row_number = row_number.split("_")
+        console.log(row_number)
+        const price = selectedOption.getAttribute('data-price');
+        const id = selectedOption.value;
+        // // console.log(selectElement)
+        // return
+
+        if (row_number.length > 2) {
+            $(`#Oilfilter-price-${row_number[2]}`).text(price)
+            $(`#oilfilter_quantity_${row_number[2]}`).val(1)
+            $(`#Oilfilter-price-${row_number[2]}`).attr("data-single-price", price)
+        } else {
+            $("#Oilfilter_price").text(price)
+            $(`#oilfilter_quantity`).val(1)
+            $("#Oilfilter_price").attr("data-single-price", price)
+
+        }
+    }
+    function changeOilFilterQty(qty_element) {
+        const get_row_number = qty_element.id
+        const qty = Math.abs(qty_element.value);
+        if (qty < 1) {
+            return
+        }
+
+        let row_number_arr = get_row_number.split("_")
+        
+        if (row_number_arr.length > 2) {
+            old_price = $(`#Oilfilter-price-${row_number_arr[2]}`).attr("data-single-price")
+            new_price = qty * old_price;
+            $(`#Oilfilter-price-${row_number_arr[2]}`).text(new_price);
+        } else {
+            old_price = $("#Oilfilter_price").attr("data-single-price")
+            new_price = qty * old_price;
+            $("#Oilfilter_price").text(new_price);
+        }
+
+    }
+
+    function getOilFilterSelectedItems() {
+        let oil_filter_items = []
+        const a = $("#oil_filter_container").children()
+        for (let i = 0; i < a.length; i = i + 3) {
+            
+            const item_name_element = a[i].children[1]
+            let item_naaam = $(item_name_element).find(":selected");
+            const item_qty_element_id = a[i + 1].children[0]
+            
+            const item_qty_element = a[i + 1].children[1]
+            const item_price_element = a[i + 2]
+           
+            if (item_qty_element.value != '' && item_qty_element.value != '0') {
+                let item = {
+                    "name": item_naaam[0].innerText.replaceAll("\n", "").replaceAll(/\s+/g, " ").trim(),
+                    "qty": parseInt(item_qty_element.value),
+                    "price": item_price_element.innerText
+
+                }
+                oil_filter_items.push(item)
+            }
+        }
+        return oil_filter_items
+    }
+
+
+    oil_filter_row = document.getElementById('oil_filter_row')
+    document.getElementById('oil_filter_row').addEventListener('click', (e) => {
+        e.preventDefault();
+
+        // Ensure the container exists
+        const oil_filter_container = document.getElementById('oil_filter_container');
+        if (oil_filter_container) {
+            rowCount++; // Increment rowCount
+
+            // Create new row HTML
+            const html = `
+        <div class="flex flex-col">
+            <label for="oil_filter_${rowCount}" class="text-gray-700 font-semibold mb-2">body Parts</label>
+            <select id="oil_filter_${rowCount}" name="oil_filter" class="oil_filter js-example-responsive border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <!-- Options will be loaded dynamically -->
+                <option disabled selected hidden>Oil Filters</option>
+            </select>
+        </div>
+        <div class="flex flex-col">
+            <label for="oilfilter_quantity_${rowCount}" class="text-gray-700 font-semibold mb-2">Quantity</label>
+            <input type="number" min="1" max="50" id="oilfilter_quantity_${rowCount}" name="oil_filter_quantity_${rowCount}" class="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="500" >
+        </div>
+        <div class="flex flex-col">
+            <label data-single-price="0" id="Oilfilter-price-${rowCount}">0</label>
+        </div>`;
+
+            // Insert new row into container
+            oil_filter_container.insertAdjacentHTML('beforeend', html);
+
+            // Load oil parts into the newly added select element
+            const newSelect = oil_filter_container.querySelector(`#oil_filter_${rowCount}`);
+            const oilQty = oil_filter_container.querySelector(`#oilfilter_quantity_${rowCount}`);
+
+            newSelect.addEventListener("change", function () {
+                
+                selectOilFilterPrice(newSelect)
+
+            })
+            oilQty.addEventListener("change", function () {
+                changeOilFilterQty(oilQty)
+            })
+            if (newSelect) {
+
+                loadOilFilter(newSelect);
+            }
+            // $(document).ready(function () {
+            //     $('select').select2();
+            // });
+        } else {
+            console.error('body_container not found');
+        }
+    });
+
+
+
+    const loadAirFilter = (newSelect) => {
+        const all_air_filter = JSON.parse('{{ all_air_filter| safe}}')
+        
+
+        for (const parts of all_air_filter) {
+            let html = `<option value='${parts.pk}' data-price='${parts.fields.sale_price}'> 
+                        ${parts.fields.name}
+                        </option>`;
+
+            $(newSelect).append(html);
+        }
+    }
+
+    function selectAirFilterPrice(selectElement) {
+        let selectedOption = $(selectElement).find(":selected");
+        
+
+        selectedOption = selectedOption[0]
+        
+        var row_number = selectElement.id
+        row_number = row_number.split("_")
+
+        const price = selectedOption.getAttribute('data-price');
+        const id = selectedOption.value;
+        // // console.log(selectElement)
+        // return
+
+        if (row_number.length > 2) {
+            $(`#airfilter-price-${row_number[2]}`).text(price)
+            $(`#airfilter_quantity_${row_number[2]}`).val(1)
+            $(`#airfilter-price-${row_number[2]}`).attr("data-single-price", price)
+        } else {
+            $("#airfilter_price").text(price)
+            $(`#airfilter_quantity`).val(1)
+            $("#airfilter_price").attr("data-single-price", price)
+
+        }
+    }
+    function changeAirFilterQty(qty_element) {
+        const get_row_number = qty_element.id
+        const qty = Math.abs(qty_element.value);
+        if (qty < 1) {
+            return
+        }
+
+        let row_number_arr = get_row_number.split("_")
+        
+        if (row_number_arr.length > 2) {
+            old_price = $(`#airfilter-price-${row_number_arr[2]}`).attr("data-single-price")
+            new_price = qty * old_price;
+            $(`#airfilter-price-${row_number_arr[2]}`).text(new_price);
+        } else {
+            old_price = $("#airfilter_price").attr("data-single-price")
+            new_price = qty * old_price;
+            $("#airfilter_price").text(new_price);
+        }
+
+    }
+
+    function getAirFilterSelectedItems() {
+        let air_filter_items = []
+        const a = $("#air_filter_container").children()
+        for (let i = 0; i < a.length; i = i + 3) {
+            
+            const item_name_element = a[i].children[1]
+            let item_naaam = $(item_name_element).find(":selected");
+            const item_qty_element_id = a[i + 1].children[0]
+            
+            const item_qty_element = a[i + 1].children[1]
+            const item_price_element = a[i + 2]
+           
+            if (item_qty_element.value != '' && item_qty_element.value != '0') {
+                let item = {
+                    "name": item_naaam[0].innerText.replaceAll("\n", "").replaceAll(/\s+/g, " ").trim(),
+                    "qty": parseInt(item_qty_element.value),
+                    "price": item_price_element.innerText
+
+                }
+                air_filter_items.push(item)
+            }
+        }
+        return air_filter_items
+    }
+
+
+    air_filter_row = document.getElementById('air_filter_row')
+    document.getElementById('air_filter_row').addEventListener('click', (e) => {
+        e.preventDefault();
+
+        // Ensure the container exists
+        const air_filter_container = document.getElementById('air_filter_container');
+        if (air_filter_container) {
+            rowCount++; // Increment rowCount
+
+            // Create new row HTML
+            const html = `
+        <div class="flex flex-col">
+            <label for="air_filter_${rowCount}" class="text-gray-700 font-semibold mb-2">body Parts</label>
+            <select id="air_filter_${rowCount}" name="air_filter" class="air_filter air_filter js-example-responsive border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <!-- Options will be loaded dynamically -->
+                <option disabled selected hidden>body Parts</option>
+            </select>
+        </div>
+        <div class="flex flex-col">
+            <label for="air_filter_quantity_${rowCount}" class="text-gray-700 font-semibold mb-2">Quantity</label>
+            <input type="number" min="1" max="50" id="airfilter_quantity_${rowCount}" name="air_filter_quantity_${rowCount}" class="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="500" >
+        </div>
+        <div class="flex flex-col">
+            <label data-single-price="0" id="airfilter-price-${rowCount}">0</label>
+        </div>`;
+
+            // Insert new row into container
+            air_filter_container.insertAdjacentHTML('beforeend', html);
+
+            // Load body parts into the newly added select element
+            const newSelect = air_filter_container.querySelector(`#air_filter_${rowCount}`);
+            const airFilterQty = air_filter_container.querySelector(`#airfilter_quantity_${rowCount}`);
+
+            newSelect.addEventListener("change", function () {
+                
+                selectAirFilterPrice(newSelect)
+
+            })
+            airFilterQty.addEventListener("change", function () {
+                changeBodyQty(airFilterQty)
+            })
+            if (newSelect) {
+
+                loadAirFilter(newSelect);
+            }
+            // $(document).ready(function () {
+            //     $('select').select2();
+            // });
+        } else {
+            console.error('air_filter_container not found');
+        }
+    });
+
+
+
+    const loadACFilter = (newSelect) => {
+        const all_ac_filter = JSON.parse('{{ all_ac_filter| safe}}')
+        
+
+        for (const parts of all_ac_filter) {
+            let html = `<option value='${parts.pk}' data-price='${parts.fields.sale_price}'> 
+                        ${parts.fields.name}
+                        </option>`;
+
+            $(newSelect).append(html);
+        }
+    }
+
+    function selectACFilterPrice(selectElement) {
+        let selectedOption = $(selectElement).find(":selected");
+        
+
+        selectedOption = selectedOption[0]
+        
+        var row_number = selectElement.id
+        row_number = row_number.split("_")
+
+        const price = selectedOption.getAttribute('data-price');
+        const id = selectedOption.value;
+        // // console.log(selectElement)
+        // return
+
+        if (row_number.length > 2) {
+            $(`#acfilter-price-${row_number[2]}`).text(price)
+            $(`#acfilter_quantity_${row_number[2]}`).val(1)
+            $(`#acfilter-price-${row_number[2]}`).attr("data-single-price", price)
+        } else {
+            $("#acfilter_price").text(price)
+            $(`#acfilter_quantity`).val(1)
+            $("#acfilter_price").attr("data-single-price", price)
+
+        }
+    }
+    function changeACFilterQty(qty_element) {
+        const get_row_number = qty_element.id
+        const qty = Math.abs(qty_element.value);
+        if (qty < 1) {
+            return
+        }
+
+        let row_number_arr = get_row_number.split("_")
+        
+        if (row_number_arr.length > 2) {
+            old_price = $(`#acfilter-price-${row_number_arr[2]}`).attr("data-single-price")
+            new_price = qty * old_price;
+            $(`#acfilter-price-${row_number_arr[2]}`).text(new_price);
+        } else {
+            old_price = $("#acfilter_price").attr("data-single-price")
+            new_price = qty * old_price;
+            $("#acfilter_price").text(new_price);
+        }
+
+    }
+
+    function getACSelectedItems() {
+        let ac_filter_items = []
+        const a = $("#ac_filter_container").children()
+        for (let i = 0; i < a.length; i = i + 3) {
+            
+            const item_name_element = a[i].children[1]
+            let item_naaam = $(item_name_element).find(":selected");
+            const item_qty_element_id = a[i + 1].children[0]
+            
+            const item_qty_element = a[i + 1].children[1]
+            const item_price_element = a[i + 2]
+           
+            if (item_qty_element.value != '' && item_qty_element.value != '0') {
+                let item = {
+                    "name": item_naaam[0].innerText.replaceAll("\n", "").replaceAll(/\s+/g, " ").trim(),
+                    "qty": parseInt(item_qty_element.value),
+                    "price": item_price_element.innerText
+
+                }
+                ac_filter_items.push(item)
+            }
+        }
+        return ac_filter_items
+    }
+
+
+    ac_filter_row = document.getElementById('ac_filter_row')
+    document.getElementById('ac_filter_row').addEventListener('click', (e) => {
+        e.preventDefault();
+
+        // Ensure the container exists
+        const ac_filter_container = document.getElementById('ac_filter_container');
+        if (ac_filter_container) {
+            rowCount++; // Increment rowCount
+
+            // Create new row HTML
+            const html = `
+        <div class="flex flex-col">
+            <label for="ac_filter_${rowCount}" class="text-gray-700 font-semibold mb-2">body Parts</label>
+            <select id="ac_filter_${rowCount}" name="ac_filter" class="ac_filter ac_filter js-example-responsive border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <!-- Options will be loaded dynamically -->
+                <option disabled selected hidden>body Parts</option>
+            </select>
+        </div>
+        <div class="flex flex-col">
+            <label for="ac_filter_quantity_${rowCount}" class="text-gray-700 font-semibold mb-2">Quantity</label>
+            <input type="number" min="1" max="50" id="acfilter_quantity_${rowCount}" name="ac_filter_quantity_${rowCount}" class="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="500" >
+        </div>
+        <div class="flex flex-col">
+            <label data-single-price="0" id="acfilter-price-${rowCount}">0</label>
+        </div>`;
+
+            // Insert new row into container
+            ac_filter_container.insertAdjacentHTML('beforeend', html);
+
+            // Load body parts into the newly added select element
+            const newSelect = ac_filter_container.querySelector(`#ac_filter_${rowCount}`);
+            const acFilterQty = ac_filter_container.querySelector(`#acfilter_quantity_${rowCount}`);
+
+            newSelect.addEventListener("change", function () {
+                
+                selectACFilterPrice(newSelect)
+
+            })
+            acFilterQty.addEventListener("change", function () {
+                changeACFilterQty(acFilterQty)
+            })
+            if (newSelect) {
+
+                loadACFilter(newSelect);
+            }
+            // $(document).ready(function () {
+            //     $('select').select2();
+            // });
+        } else {
+            console.error('ac_filter_container not found');
+        }
+    });
+
+
+
+
+
+
+
+    /// load body Parts
+
+    const bodyParts = (newSelect) => {
+        const all_body_parts = JSON.parse('{{ all_body_parts| safe}}')
+        
+
+        for (const parts of all_body_parts) {
+            let html = `<option value='${parts.pk}' data-price='${parts.fields.sale_price}'> 
+                        ${parts.fields.name}
+                        </option>`;
+
+            $(newSelect).append(html);
+        }
+    }
+
+    function selectBodyPartsPrice(selectElement) {
+        let selectedOption = $(selectElement).find(":selected");
+        
+
+        selectedOption = selectedOption[0]
+        
+        var row_number = selectElement.id
+        row_number = row_number.split("_")
+
+        const price = selectedOption.getAttribute('data-price');
+        const id = selectedOption.value;
+        // // console.log(selectElement)
+        // return
+
+        if (row_number.length > 2) {
+            $(`#body-parts-price-${row_number[2]}`).text(price)
+            $(`#body_quantity_${row_number[2]}`).val(1)
+            $(`#body-parts-price-${row_number[2]}`).attr("data-single-price", price)
+        } else {
+            $("#body_parts_price").text(price)
+            $(`#body_quantity`).val(1)
+            $("#body_parts_price").attr("data-single-price", price)
+
+        }
+    }
+    function changeBodyQty(qty_element) {
+        const get_row_number = qty_element.id
+        const qty = Math.abs(qty_element.value);
+        if (qty < 1) {
+            return
+        }
+
+        let row_number_arr = get_row_number.split("_")
+        
+        if (row_number_arr.length > 2) {
+            old_price = $(`#body-parts-price-${row_number_arr[2]}`).attr("data-single-price")
+            new_price = qty * old_price;
+            $(`#body-parts-price-${row_number_arr[2]}`).text(new_price);
+        } else {
+            old_price = $("#body_parts_price").attr("data-single-price")
+            new_price = qty * old_price;
+            $("#body_parts_price").text(new_price);
+        }
+
+    }
+
+    function getBodySelectedItems() {
+        let body_items = []
+        const a = $("#body_container").children()
+        for (let i = 0; i < a.length; i = i + 3) {
+            
+            const item_name_element = a[i].children[1]
+            let item_naaam = $(item_name_element).find(":selected");
+            const item_qty_element_id = a[i + 1].children[0]
+            
+            const item_qty_element = a[i + 1].children[1]
+            const item_price_element = a[i + 2]
+           
+            if (item_qty_element.value != '' && item_qty_element.value != '0') {
+                let item = {
+                    "name": item_naaam[0].innerText.replaceAll("\n", "").replaceAll(/\s+/g, " ").trim(),
+                    "qty": parseInt(item_qty_element.value),
+                    "price": item_price_element.innerText
+
+                }
+                body_items.push(item)
+            }
+        }
+        return body_items
+    }
+
+
+    add_body_row = document.getElementById('add_body_row')
+    document.getElementById('add_body_row').addEventListener('click', (e) => {
+        e.preventDefault();
+
+        // Ensure the container exists
+        const body_container = document.getElementById('body_container');
+        if (body_container) {
+            rowCount++; // Increment rowCount
+
+            // Create new row HTML
+            const html = `
+        <div class="flex flex-col">
+            <label for="body_parts_${rowCount}" class="text-gray-700 font-semibold mb-2">body Parts</label>
+            <select id="body_parts_${rowCount}" name="body_parts" class="body_parts body_parts js-example-responsive border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <!-- Options will be loaded dynamically -->
+                <option disabled selected hidden>body Parts</option>
+            </select>
+        </div>
+        <div class="flex flex-col">
+            <label for="body_quantity_${rowCount}" class="text-gray-700 font-semibold mb-2">Quantity</label>
+            <input type="number" min="1" max="50" id="body_quantity_${rowCount}" name="body_quantity_${rowCount}" class="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="500" >
+        </div>
+        <div class="flex flex-col">
+            <label data-single-price="0" id="body-parts-price-${rowCount}">0</label>
+        </div>`;
+
+            // Insert new row into container
+            body_container.insertAdjacentHTML('beforeend', html);
+
+            // Load body parts into the newly added select element
+            const newSelect = body_container.querySelector(`#body_parts_${rowCount}`);
+            const bodyQty = body_container.querySelector(`#body_quantity_${rowCount}`);
+
+            newSelect.addEventListener("change", function () {
+                
+                selectBodyPartsPrice(newSelect)
+
+            })
+            bodyQty.addEventListener("change", function () {
+                changeBodyQty(bodyQty)
+            })
+            if (newSelect) {
+
+                bodyParts(newSelect);
+            }
+            // $(document).ready(function () {
+            //     $('select').select2();
+            // });
+        } else {
+            console.error('body_container not found');
+        }
+    });
+
+
+
+
+
+
+
+
+
+
+    /// load spare Parts
+
+    const spareParts = (newElement) => {
+        const all_spare_parts = JSON.parse('{{ all_spare_parts| safe}}')
+
+        for (const parts of all_spare_parts) {
+            let html = `<option value='${parts.pk}' data-price='${parts.fields.sale_price}'> 
+                        ${parts.fields.name}
+                        </option>`
+
+            $(newElement).append(html);
+        }
+    }
+
+
+    function selectSparePartsPrice(selectElement) {
+        let selectedOption = $(selectElement).find(":selected");
+        selectedOption = selectedOption[0]
+        spareId = selectedOption.value
+        const price = selectedOption.getAttribute('data-price');
+        const row_number = selectElement.id;
+      
+        new_row = row_number.split("_")
+        
+        if(new_row.length > 2){
+            $(`#spare-parts-price-${new_row[2]}`).text(price)
+            $(`#spare_quantity_${new_row[2]}`).val(1)
+            $(`#spare-parts-price-${new_row[2]}`).attr("data-single-price", price)
+        } else {
+            $("#spare_parts_price").text(price)
+            $(`#spare_quantity`).val(1)
+            $("#spare_parts_price").attr("data-single-price", price)
+
+        }
+
+
+        
+        // $("input[name='spare_parts_id']").val(id);
+        // $("input[name='spare_parts_price[]']").val(price);
+       
+
+    }
+
+    function spareChangeQty(qty_element){
+        const get_row_number = qty_element.id
+        
+        const qty = Math.abs(qty_element.value);
+        if (qty < 1) {
+            return
+        }
+
+        let row_number_arr = get_row_number.split("_")
+        
+        if (row_number_arr.length > 2) {
+            old_price = $(`#spare-parts-price-${row_number_arr[2]}`).attr("data-single-price")
+            new_price = qty * old_price;
+            $(`#spare-parts-price-${row_number_arr[2]}`).text(new_price);
+        } else {
+            old_price = $("#spare_parts_price").attr("data-single-price")
+            new_price = qty * old_price;
+            $("#spare_parts_price").text(new_price);
+        }
+
+    }
+    
+    function getSpareSelectedItems() {
+        let spare_items = []
+        const a = $("#spare_container").children()
+        
+        for (let i = 0; i < a.length; i = i + 3) {
+            const item_name_element = a[i].children[1]
+            
+            let item_naaam = $(item_name_element).find(":selected");
+            
+            const item_qty_element = a[i + 1].children[1]
+            
+            const item_price_element = a[i + 2]
+           
+            if (item_qty_element.value != '' && item_qty_element.value != '0') {
+                let item = {
+                    "name": item_naaam[0].innerText.replaceAll("\n", "").replaceAll(/\s+/g, " ").trim(),
+                    "qty": parseInt(item_qty_element.value),
+                    "price": item_price_element.innerText
+
+                }
+                spare_items.push(item)
+            }
+        }
+        return spare_items
+    }
+
+    
+    add_spare_row = document.getElementById('add_spare_row')
+    document.getElementById('add_spare_row').addEventListener('click', (e) => {
+        e.preventDefault();
+        // $(document).ready(function () {
+        //     $('select').select2();
+        // });
+        // Ensure the container exists
+        const spare_container = document.getElementById('spare_container');
+        if (spare_container) {
+            rowCount++; // Increment rowCount
+
+            // Create new row HTML
+            const html = `
+        <div class="flex flex-col">
+            <label for="spare_parts_${rowCount}" class="text-gray-700 font-semibold mb-2">Spare Parts</label>
+            <select id="spare_parts_${rowCount}" name="spare_parts" class="spare_parts js-example-responsive border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <!-- Options will be loaded dynamically -->
+                <option disabled selected>Spare Parts</option>
+            </select>
+        </div>
+        <div class="flex flex-col">
+            <label for="spare_quantity_${rowCount}" class="text-gray-700 font-semibold mb-2">Quantity</label>
+            <input type="number" min="1" max="50" id="spare_quantity_${rowCount}" name="spare_parts_qty-${rowCount}" class="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="500" >
+        </div>
+        <div class="flex flex-col">
+            <label data-single-price="0" id="spare-parts-price-${rowCount}">0</label>
+            
+        </div>`;
+
+            // Insert new row into container
+            spare_container.insertAdjacentHTML('beforeend', html);
+
+            // Load spare parts into the newly added select element
+            const newSelect = spare_container.querySelector(`#spare_parts_${rowCount}`);
+            const spareQty = spare_container.querySelector(`#spare_quantity_${rowCount}`);
+            
+            newSelect.addEventListener('change', function(){selectSparePartsPrice(newSelect)})
+            spareQty.addEventListener('change', function(){spareChangeQty(spareQty)})
+
+            if (newSelect) {
+                spareParts(newSelect);
+            }
+        } else {
+            console.error('spare_container not found');
+        }
+    });
+
+
+    /// load cng Parts
+
+    const cngParts = (new_element) => {
+        const all_cng_parts = JSON.parse('{{ all_cng_parts| safe}}')
+        console.log(all_cng_parts)
+        for (const parts of all_cng_parts) {
+            let html = `<option value='${parts.pk}' data-price='${parts.fields.sale_price}'> 
+                        ${parts.fields.name}
+                        </option>`;
+
+            $(new_element).append(html);
+        }
+    }
+
+    function selectcngPartsPrice(selectElement) {
+        let selectedOption = $(selectElement).find(":selected");
+        selectedOption = selectedOption[0]
+        spareId = selectedOption.value
+        const price = selectedOption.getAttribute('data-price');
+        const row_number = selectElement.id;
+      
+        new_row = row_number.split("_")
+        
+        if(new_row.length > 2){
+            $(`#cng-parts-price-${new_row[2]}`).text(price)
+            $(`#cng_quantity_${new_row[2]}`).val(1)
+            $(`#cng-parts-price-${new_row[2]}`).attr("data-single-price", price)
+        } else {
+            $("#cng_parts_price").text(price)
+            $(`#cng_quantity`).val(1)
+            $("#cng_parts_price").attr("data-single-price", price)
+
+        }
+    }
+
+    function changeCngQty(qty_element){
+        const get_row_number = qty_element.id
+        const qty = Math.abs(qty_element.value);
+        
+        if (qty < 1) {
+            return
+        }
+
+        let row_number_arr = get_row_number.split("_")
+        
+        if (row_number_arr.length > 2) {
+            old_price = $(`#cng-parts-price-${row_number_arr[2]}`).attr("data-single-price")
+            new_price = qty * old_price;
+            $(`#cng-parts-price-${row_number_arr[2]}`).text(new_price);
+        } else {
+            old_price = $("#cng_parts_price").attr("data-single-price")
+            
+            new_price = qty * old_price;
+            $("#cng_parts_price").text(new_price);
+        }
+
+    }
+
+    function getCngSelectedItems() {
+        let cng_items = []
+        const a = $("#cng_container").children()
+        
+        for (let i = 0; i < a.length; i = i + 3) {
+            const item_name_element = a[i].children[1]
+            
+            let item_naaam = $(item_name_element).find(":selected");
+            
+            const item_qty_element = a[i + 1].children[1]
+            
+            const item_price_element = a[i + 2]
+           
+            if (item_qty_element.value != '' && item_qty_element.value != '0') {
+                let item = {
+                    "name": item_naaam[0].innerText.replaceAll("\n", "").replaceAll(/\s+/g, " ").trim(),
+                    "qty": parseInt(item_qty_element.value),
+                    "price": item_price_element.innerText
+
+                }
+                cng_items.push(item)
+            }
+        }
+        return cng_items
+    }
+
+    add_cng_row = document.getElementById('add_cng_row')
+    document.getElementById('add_cng_row').addEventListener('click', (e) => {
+        e.preventDefault();
+        // $(document).ready(function () {
+        //     $('select').select2();
+        // });
+        // Ensure the container exists
+        const cng_container = document.getElementById('cng_container');
+        if (cng_container) {
+            rowCount++; // Increment rowCount
+
+            // Create new row HTML
+            const html = `
+        <div class="flex flex-col">
+            <label for="cng_parts_${rowCount}" class="text-gray-700 font-semibold mb-2">cng Parts</label>
+            <select id="cng_parts_${rowCount}" name="cng_parts"  onchange='selectcngPartsPrice(this)' class="cng_parts js-example-responsive border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <!-- Options will be loaded dynamically -->
+                <option disabled>cng Parts</option>
+            </select>
+        </div>
+        <div class="flex flex-col">
+            <label for="cng_quantity_${rowCount}" class="text-gray-700 font-semibold mb-2">Quantity</label>
+            <input type="number" id="cng_quantity_${rowCount}" name="cng_quantity" class="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="500" >
+        </div>
+        <label data-single-price="0" id="cng-parts-price-${rowCount}">0</label>
+        `;
+
+            // Insert new row into container
+            cng_container.insertAdjacentHTML('beforeend', html);
+
+            // Load cng parts into the newly added select element
+            const newSelect = cng_container.querySelector(`#cng_parts_${rowCount}`);
+            const cngQty = cng_container.querySelector(`#cng_quantity_${rowCount}`);
+            
+            
+
+            newSelect.addEventListener("change",function(){selectcngPartsPrice(newSelect)})
+            cngQty.addEventListener("change",function(){
+                
+                changeCngQty(cngQty)})
+            if (newSelect) {
+                cngParts(newSelect);
+            }
+        } else {
+            console.error('cng_container not found');
+        }
+    });
+
+    /// load kabli Parts
+
+    const kabliParts = (newSelect) => {
+        const kabli_price = document.getElementById('kabli_parts_price')
+        const all_kabli_parts = JSON.parse(`{{ all_kabli_parts| safe}}`)
+
+
+        for (const parts of all_kabli_parts) {
+            let html = `<option value='${parts.pk}' data-price='${parts.fields.sale_price}'> 
+                        ${parts.fields.name}
+                        </option>`;
+            $(newSelect).append(html);
+        }
+    }
+
+    function changeKabliQty(qty_element) {
+        const get_row_number = qty_element.id
+        const qty = Math.abs(qty_element.value);
+
+        if (qty < 1) {
+            return
+        }
+
+        let row_number_arr = get_row_number.split("_")
+        if (row_number_arr.length > 2) {
+            old_price = $(`#kabli-price-${row_number_arr[2]}`).attr("data-single-price")
+            new_price = qty * old_price;
+            $(`#kabli-price-${row_number_arr[2]}`).text(new_price);
+        } else {
+            old_price = $("#kabli_parts_price").attr("data-single-price")
+            new_price = qty * old_price;
+            $("#kabli_parts_price").text(new_price);
+        }
+
+    }
+    function getKabaliSelectedItems() {
+        let kabli_items = []
+        const a = $("#kabli_container").children()
+        
+        for (let i = 0; i < a.length; i = i + 3) {
+            const item_name_element = a[i].children[1]
+            
+            let item_naaam = $(item_name_element).find(":selected");
+            
+            const item_qty_element = a[i + 1].children[1]
+            
+            const item_price_element = a[i + 2]
+           
+            if (item_qty_element.value != '' && item_qty_element.value != '0') {
+                let item = {
+                    "name": item_naaam[0].innerText.replaceAll("\n", "").replaceAll(/\s+/g, " ").trim(),
+                    "qty": parseInt(item_qty_element.value),
+                    "price": item_price_element.innerText
+
+                }
+                kabli_items.push(item)
+            }
+        }
+        return kabli_items
+    }
+
+
+
+    function selectKabliPartsPrice(selectElement) {
+        let selectedOption = $(selectElement).find(":selected");
+        selectedOption = selectedOption[0]
+        
+        var row_number = selectElement.id
+        row_number = row_number.split("_")
+        // // console.log(row_number);
+        // return
+
+        const price = selectedOption.getAttribute('data-price');
+        const id = selectedOption.value;
+
+        if (row_number.length > 2) {
+            $(`#kabli-price-${row_number[2]}`).text(price)
+            $(`#kabli_quantity_${row_number[2]}`).val(1)
+            $(`#kabli-price-${row_number[2]}`).attr("data-single-price", price)
+        } else {
+            $("#kabli_parts_price").text(price)
+            $(`#kabli_quantity`).val(1)
+            $("#kabli_parts_price").attr("data-single-price", price)
+
+        }
+
+
+        // $("input[name='kabli_parts_id']").val(id);
+        // $("input[name='kabli_parts_price']").val(price);
+
+    }
+
+
+
+    add_kabli_row = document.getElementById('add_kabli_row')
+    document.getElementById('add_kabli_row').addEventListener('click', (e) => {
+        e.preventDefault();
+
+        // Ensure the container exists
+        const kabli_container = document.getElementById('kabli_container');
+        if (kabli_container) {
+            rowCount++; // Increment rowCount
+
+            // Create new row HTML
+            const html = `
+        <div class="flex flex-col">
+            <label for="kabli_parts_${rowCount}" class="text-gray-700 font-semibold mb-2">kabli Parts</label>
+            <select id="kabli_parts_${rowCount}" name="kabli_parts-${rowCount}"  class="kabli_parts js-example-responsive border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <!-- Options will be loaded dynamically -->
+                <option disabled selected hidden>kabli Parts</option>
+            </select>
+        </div>
+        <div class="flex flex-col">
+            <label for="kabli_quantity_${rowCount}" class="text-gray-700 font-semibold mb-2">Quantity</label>
+            <input type="number" min="1" max="50" id="kabli_quantity_${rowCount}" name="kabli_parts-qty-${rowCount}" class="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="500" >
+        </div>
+         <div class="flex flex-col">
+            <label data-single-price="0" id="kabli-price-${rowCount}">0</label>
+            </div>
+        `;
+
+            // Insert new row into container
+            kabli_container.insertAdjacentHTML('beforeend', html);
+
+            // Load kabli parts into the newly added select element
+            const newSelect = kabli_container.querySelector(`#kabli_parts_${rowCount}`);
+            const newQty = kabli_container.querySelector(`#kabli_quantity_${rowCount}`);
+
+            newSelect.addEventListener("change", function () {
+
+                selectKabliPartsPrice(newSelect)
+
+            })
+            newQty.addEventListener("change", function () { changeKabliQty(newQty) });
+
+            if (newSelect) {
+                kabliParts(newSelect);
+            }
+
+            // $(newSelect).select2();
+
+        } else {
+            console.error('kabli_container not found');
+        }
+    });
+
+
+
+    // $(".kabli_parts").on('change',function(){
+    //     selectKabliPartsPrice($(this))
+    // })
+
+
+
+    /// load silencer Parts
+
+    const silencerParts = (newElement) => {
+        const all_silencer = JSON.parse('{{ all_silencer| safe}}')
+
+        for (const parts of all_silencer) {
+            let html = `<option value='${parts.pk}' data-price='${parts.fields.sale_price}'> 
+                        ${parts.fields.name}
+                        </option>`;
+
+            $(newElement).append(html);
+        }
+    }
+    function changeSilencerQty(qty_element) {
+        const get_row_number = qty_element.id
+        const qty = Math.abs(qty_element.value);
+
+        if (qty < 1) {
+            return
+        }
+
+        let row_number_arr = get_row_number.split("_")
+        if (row_number_arr.length > 2) {
+            old_price = $(`#silencer-price-${row_number_arr[2]}`).attr("data-single-price")
+            new_price = qty * old_price;
+            $(`#silencer-price-${row_number_arr[2]}`).text(new_price);
+        } else {
+            old_price = $("#silencer_parts_price").attr("data-single-price")
+            new_price = qty * old_price;
+            $("#silencer_parts_price").text(new_price);
+        }
+
+    }
+
+
+    function selectsilencerPartsPrice(selectElement) {
+        let selectedOption = $(selectElement).find(":selected");
+        selectedOption = selectedOption[0]
+        
+        var row_number = selectElement.id
+        row_number = row_number.split("_")
+        // // console.log(row_number);
+        // return
+
+        const price = selectedOption.getAttribute('data-price');
+        const id = selectedOption.value;
+
+        if (row_number.length > 2) {
+            $(`#silencer-price-${row_number[2]}`).text(price)
+            $(`#silencer_quantity_${row_number[2]}`).val(1)
+            $(`#silencer-price-${row_number[2]}`).attr("data-single-price", price)
+        } else {
+            $("#silencer_parts_price").text(price)
+            $(`#silencer_quantity`).val(1)
+            $("#silencer_parts_price").attr("data-single-price", price)
+
+        }
+    }
+
+    function getSilencerSelectedItems() {
+        let silencer_items = []
+        const a = $("#silencer_container").children()
+        
+        for (let i = 0; i < a.length; i = i + 3) {
+            const item_name_element = a[i].children[1]
+            
+            let item_naaam = $(item_name_element).find(":selected");
+            
+            const item_qty_element = a[i + 1].children[1]
+            
+            const item_price_element = a[i + 2]
+           
+            if (item_qty_element.value != '' && item_qty_element.value != '0') {
+                let item = {
+                    "name": item_naaam[0].innerText.replaceAll("\n", "").replaceAll(/\s+/g, " ").trim(),
+                    "qty": parseInt(item_qty_element.value),
+                    "price": item_price_element.innerText
+
+                }
+                silencer_items.push(item)
+            }
+        }
+        return silencer_items
+    }
+
+    add_silencer_row = document.getElementById('add_silencer_row')
+    document.getElementById('add_silencer_row').addEventListener('click', (e) => {
+        e.preventDefault();
+
+        // Ensure the container exists
+        const silencer_container = document.getElementById('silencer_container');
+        if (silencer_container) {
+            rowCount++; // Increment rowCount
+
+            // Create new row HTML
+            const html = `
+        <div class="flex flex-col">
+            <label for="silencer_parts_${rowCount}" class="text-gray-700 font-semibold mb-2">silencer Parts</label>
+            <select id="silencer_parts_${rowCount}" name="silencer_parts-${rowCount}"  class="silencer_parts js-example-responsive border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <!-- Options will be loaded dynamically -->
+                <option disabled selected hidden>silencer Parts</option>
+            </select>
+        </div>
+        <div class="flex flex-col">
+            <label for="silencer_quantity_${rowCount}" class="text-gray-700 font-semibold mb-2">Quantity</label>
+            <input type="number" min="1" max="50" id="silencer_quantity_${rowCount}" name="silencer_parts-qty-${rowCount}" class="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="500" >
+        </div>
+         <div class="flex flex-col">
+            <label data-single-price="0" id="silencer-price-${rowCount}">0</label>
+            </div>
+        `;
+
+            // Insert new row into container
+            silencer_container.insertAdjacentHTML('beforeend', html);
+
+            // Load silencer parts into the newly added select element
+            const newSelect = silencer_container.querySelector(`#silencer_parts_${rowCount}`);
+            const newQty = silencer_container.querySelector(`#silencer_quantity_${rowCount}`);
+
+            newSelect.addEventListener("change", function () {
+
+                selectsilencerPartsPrice(newSelect)
+
+            })
+            newQty.addEventListener("change", function () { changeSilencerQty(newQty) });
+
+            if (newSelect) {
+                silencerParts(newSelect);
+            }
+
+            // $(newSelect).select2();
+
+        } else {
+            console.error('silencer_container not found');
+        }
+    });
+
+
+
+    /// load decoration Parts
+
+    const decorationParts = (newElement) => {
+        const all_decoration = JSON.parse('{{ all_decoration| safe}}')
+
+        for (const parts of all_decoration) {
+            let html = `<option value='${parts.pk}' data-price='${parts.fields.sale_price}'> 
+                        ${parts.fields.name}
+                        </option>`;
+
+            $(newElement).append(html);
+        }
+    }
+
+    function changedecorationQty(qty_element) {
+        const get_row_number = qty_element.id
+        const qty = Math.abs(qty_element.value);
+
+        if (qty < 1) {
+            return
+        }
+
+        let row_number_arr = get_row_number.split("_")
+        if (row_number_arr.length > 2) {
+            old_price = $(`#decoration-price-${row_number_arr[2]}`).attr("data-single-price")
+            new_price = qty * old_price;
+            $(`#decoration-price-${row_number_arr[2]}`).text(new_price);
+        } else {
+            old_price = $("#decoration_parts_price").attr("data-single-price")
+            new_price = qty * old_price;
+            $("#decoration_parts_price").text(new_price);
+        }
+
+    }
+
+
+    function selectDecorationrPartsPrice(selectElement) {
+        let selectedOption = $(selectElement).find(":selected");
+        selectedOption = selectedOption[0]
+        var row_number = selectElement.id
+        row_number = row_number.split("_")
+        // // console.log(row_number);
+        // return
+
+        const price = selectedOption.getAttribute('data-price');
+        const id = selectedOption.value;
+
+        if (row_number.length > 2) {
+            $(`#decoration-price-${row_number[2]}`).text(price)
+            $(`#decoration_quantity_${row_number[2]}`).val(1)
+            $(`#decoration-price-${row_number[2]}`).attr("data-single-price", price)
+        } else {
+            $("#decoration_parts_price").text(price)
+            $(`#decoration_quantity`).val(1)
+            $("#decoration_parts_price").attr("data-single-price", price)
+
+        }
+    }
+
+    function getDecorationSelectedItems() {
+        let decoration_items = []
+        const a = $("#decoration_container").children()
+        
+        for (let i = 0; i < a.length; i = i + 3) {
+            const item_name_element = a[i].children[1]
+            
+            let item_naaam = $(item_name_element).find(":selected");
+            
+            const item_qty_element = a[i + 1].children[1]
+            
+            const item_price_element = a[i + 2]
+           
+            if (item_qty_element.value != '' && item_qty_element.value != '0') {
+                let item = {
+                    "name": item_naaam[0].innerText.replaceAll("\n", "").replaceAll(/\s+/g, " ").trim(),
+                    "qty": parseInt(item_qty_element.value),
+                    "price": item_price_element.innerText
+
+                }
+                decoration_items.push(item)
+            }
+        }
+        return decoration_items
+    }
+
+
+    add_decoration_row = document.getElementById('add_decoration_row')
+    document.getElementById('add_decoration_row').addEventListener('click', (e) => {
+        e.preventDefault();
+
+        // Ensure the container exists
+        const decoration_container = document.getElementById('decoration_container');
+        if (decoration_container) {
+            rowCount++; // Increment rowCount
+
+            // Create new row HTML
+            const html = `
+        <div class="flex flex-col">
+            <label for="decoration_parts_${rowCount}" class="text-gray-700 font-semibold mb-2">decoration Parts</label>
+            <select id="decoration_parts_${rowCount}" name="decoration_parts-${rowCount}"  class="decoration_parts js-example-responsive border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <!-- Options will be loaded dynamically -->
+                <option disabled selected hidden>decoration Parts</option>
+            </select>
+        </div>
+        <div class="flex flex-col">
+            <label for="decoration_quantity_${rowCount}" class="text-gray-700 font-semibold mb-2">Quantity</label>
+            <input type="number" min="1" max="50" id="decoration_quantity_${rowCount}" name="decoration_parts-qty-${rowCount}" class="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="500" >
+        </div>
+         <div class="flex flex-col">
+            <label data-single-price="0" id="decoration-price-${rowCount}">0</label>
+            </div>
+        `;
+
+            // Insert new row into container
+            decoration_container.insertAdjacentHTML('beforeend', html);
+
+            // Load decoration parts into the newly added select element
+            const newSelect = decoration_container.querySelector(`#decoration_parts_${rowCount}`);
+            const newQty = decoration_container.querySelector(`#decoration_quantity_${rowCount}`);
+
+            newSelect.addEventListener("change", function () {
+
+                selectDecorationrPartsPrice(newSelect)
+
+            })
+            newQty.addEventListener("change", function () { changedecorationQty(newQty) });
+
+            if (newSelect) {
+                decorationParts(newSelect);
+            }
+
+            // $(newSelect).select2();
+
+        } else {
+            console.error('decoration_container not found');
+        }
+    });
+
+
+
+
+
+    // const loadCustomer = async () => {
+    //     const customers = JSON.parse('{{ existing_entries| safe}}');
+        
+
+    //     for (const data of customers) {
+    //         let fields = data.fields;
+    //         fields.id = data.pk;
+    //         let html = `<option value='${JSON.stringify(data.fields)}'> 
+    //                     ${data.fields.registeration_num} - ${data.fields.vehicle} - ${data.fields.name}
+    //                     </option>`;
+    //         $("#customers").append(html);
+    //     }
+    // }
+
+    // function selectCustomer(t) {
+    //     const customer = JSON.parse(t.value)
+    //     $("input[name='customer_id']").val(customer.id)
+    //     $("input[name='name']").val(customer.name)
+    //     $("input[name='phone']").val(customer.phone_number)
+    //     $("input[name='vehicle']").val(customer.vehicle)
+    //     $("input[name='registration_num']").val(customer.registeration_num)
+    //     $("input[name='date']").val(customer.date)
+    //     $("input[name='last_reading']").val(customer.last_reading)
+    //     $("input[name='next_reading']").val(customer.next_reading)
+    //     $("input[name='next_changing_date']").val(customer.next_changing_date)
+    // }
+
+
+    // /// multiple select
+
+    // function getSelectedSpareParts() {
+    //     const selectedValues = $('#spare_parts').val(); // This returns an array of selected values
+    //     // console.log(selectedValues);
+    //     return selectedValues;
+    // }
+
+    // function getSelectedBodyParts() {
+    //     const selectedValues = $('#body_parts').val(); // This returns an array of selected values
+    //     return selectedValues;
+    // }
+
+    // function getSelectedKabliParts() {
+    //     const selectedValues = $('#kabli_parts').val(); // This returns an array of selected values
+    //     // console.log(selectedValues);
+    //     return selectedValues;
+    // }
+
+    // function getSelectedCNGParts() {
+    //     const selectedValues = $('#cng_parts').val(); // This returns an array of selected values
+    //     // console.log(selectedValues);
+    //     return selectedValues;
+    // }
+
+    // function getSelectedsilencerParts() {
+    //     const selectedValues = $('#silencer').val(); // This returns an array of selected values
+    //     // console.log(selectedValues);
+    //     return selectedValues;
+    // }
+
+    // function getSelectedDecorationParts() {
+    //     const selectedValues = $('#decoration').val(); // This returns an array of selected values
+    //     // console.log(selectedValues);
+    //     return selectedValues;
+    // }
+    
+    const formElement = document.getElementById("my-form");
+
+formElement.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const myForm = e.target;
+    const formData = new FormData(myForm);
+    const formObject = {};
+
+    formData.forEach((value, key) => {
+        formObject[key] = value;
+    });
+
+    // Add additional data as JSON strings
+    formObject.body_parts_data = JSON.stringify(getBodySelectedItems());
+    formObject.spare_parts_data = JSON.stringify(getSpareSelectedItems());
+    formObject.cng_parts_data = JSON.stringify(getCngSelectedItems());
+    formObject.kabli_parts_data = JSON.stringify(getKabaliSelectedItems());
+    formObject.decoration_parts_data = JSON.stringify(getDecorationSelectedItems());
+    formObject.silencer_parts_data = JSON.stringify(getSilencerSelectedItems());
+    formObject.engin_oil_data = JSON.stringify(getOilSelectedItems());
+    formObject.oil_filter_data = JSON.stringify(getOilFilterSelectedItems());
+    formObject.air_filter_data = JSON.stringify(getAirFilterSelectedItems());
+    formObject.ac_filter_data = JSON.stringify(getACSelectedItems());
+    formObject.whole_sale_data = JSON.stringify(getWholeSaleSelectedItems());
+
+    fetch('/new_entry/', {
+        method: 'POST',
+        body: JSON.stringify(formObject), // Convert the entire formObject to JSON
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            "Content-Type": "application/json",
+            'X-CSRFToken': '{{ csrf_token }}'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        successMessage();
+        loadProductMsg()
+        $('#table_div')
+        formElement.reset();
+        
+        
+        // Reset the form after successful submission
+        // console.log("success", data);
+    })
+    .catch(error => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        errorMessage();
+        //formElement.reset();
+       
+    });
+});
+
+
+
+
+
+    // const my_form = document.getElementById("my-form").addEventListener('submit',(e)=>{
+    //     e.preventDefault()
+    //     const myForm = e.target
+    //     const formData = new FormData(myForm)
+    //     formData.append('body_parts_data', JSON.stringify(getBodySelectedItems()));
+    //     formData.append('spare_parts_data', JSON.stringify(getSpareSelectedItems()));
+    //     formData.append('cng_parts_data', JSON.stringify(getCngSelectedItems()));
+    //     formData.append('kabli_parts_data', JSON.stringify(getKabaliSelectedItems()));
+    //     formData.append('decoration_parts_data', JSON.stringify(getDecorationSelectedItems()));
+    //     formData.append('silencer_parts_data', JSON.stringify(getSilencerSelectedItems()));
+    //     formData.append('csrfmiddlewaretoken', '{{ csrf_token }}'); // If using Django
+    //     fetch('/new_entry/', {
+    //         method: 'POST',
+    //         body: formData,
+    //         headers: {
+    //             'X-Requested-With': 'XMLHttpRequest',
+    //             "Content-Type": "application/json"
+    //         }
+    //     })
+    //     .then(response => {
+    //        if (response.ok){
+    //         return response.json()
+    //        }
+           
+    //     })
+    //     .then(data => {
+    //         // console.log("success",data)
+    //     })
+    //     .catch(error => {
+    //         // console.log("error",error)
+
+    //     });
+
+    // });
+//         const ajax_data = ()=>{
+//             $.ajax({
+//         url: '/new_entry/',  // Replace with your server endpoint
+//         type: 'POST',
+//         data: {
+//             body_parts_data: getBodySelectedItems(),  // Convert to JSON string
+//             spare_parts_data: getSpareSelectedItems(),
+//             cng_parts_data: getCngSelectedItems(),
+//             kabli_parts_data: getKabaliSelectedItems(),
+//             decoration_parts_data: getDecorationSelectedItems(),
+//             silencer_parts_data: getSilencerSelectedItems(),
+//             csrfmiddlewaretoken: '{{ csrf_token }}' // If using Django
+//         },
+//         success: function (response) {
+//             // console.log(response);
+
+//         },
+//         error: function (error) {
+
+//         }
+//     });
+    
+// }
+// // console.log(ajax_data.data)
+// return ajax_data
+    
+        
+    
+
+    // function saveSparePartsSelection() {
+    //     const selectedSpareParts = getSelectedSpareParts();
+    //     const selectedBodyParts = getSelectedBodyParts();
+    //     const selectedKabliParts = getSelectedKabliParts();
+    //     const selectedCNGParts = getSelectedCNGParts();
+    //     const selectedSilencerParts = getSelectedsilencerParts();
+    //     const selectedDecorationParts = getSelectedDecorationParts();
+
+    //     $.ajax({
+    //         url: '/new_entry/',  // Replace with your server endpoint
+    //         type: 'POST',
+    //         data: {
+    //             body_parts_data: JSON.stringify(getBodySelectedItems()),  // Convert to JSON string
+    //             spare_parts_data: JSON.stringify(getSpareSelectedItems()),
+    //             cng_parts_data: JSON.stringify(getCngSelectedItems()),
+    //             kabli_parts_data: JSON.stringify(getKabliSelectedItems()),
+    //             decoration_parts_data: JSON.stringify(getDecorationSelectedItems()),
+    //             silencer_parts_data: JSON.stringify(getSilencerSelectedItems()),
+    //             csrfmiddlewaretoken: '{{ csrf_token }}' // If using Django
+    //         },
+    //         success: function (response) {
+    //             // console.log(response);
+    //             alert('Spare parts selection saved successfully!');
+    //         },
+    //         error: function (error) {
+    //             alert('An error occurred while saving the selection.');
+    //         }
+    //     });
+    // }
+
+
+
+     
+
+
+
+    // loadCustomer()
+    loadOil($(".engine_oil"))
+    loadWholeSale($(".wholeSale_parts"))
+    loadOilFilter($(".oil_filter"))
+    loadAirFilter($(".air_filter"))
+    loadACFilter($(".ac_filter"))
+    bodyParts($(".body_parts"))
+    spareParts($(".spare_parts"))
+    kabliParts($(".kabli_parts"))
+    cngParts($(".cng_parts"))
+    decorationParts($('.decoration_parts'))
+    silencerParts($('.silencer_parts'))
+    
+</script>
+
+</html>
