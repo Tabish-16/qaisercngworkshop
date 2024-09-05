@@ -65,9 +65,7 @@
     </nav>
 
 
-    <div id="msg-box" class="mt-20">
-
-    </div>
+    
 
     <!-- <div class="flex justify-center items-center flex-col">
         <h1 class="text-center my-4 text-3xl text-gray-800 font-bold">Products Information</h1>
@@ -471,6 +469,10 @@
     </div>
 
     <hr class="mt-10 ">
+        <div class="msg-box" class="mt-20">
+
+        </div>
+    <hr class="mt-10 ">
 
     <div id="table_div" class="flex justify-center items-center mt-10">
         <div class="w-11/12 mt-5 border p-4 rounded">
@@ -503,10 +505,10 @@
                         <td class="">{{data.last_reading}}</td>
                         <td class="">{{data.next_reading}}</td>
                         <td class="">{{data.next_changing_date}}</td>
-                        <td class=""><a
+                        <td class=""><a target="_blank"
                                 class="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 href="{% url 'invoice_pdf' pk=data.id %}">Oil Info</a></td>
-                        <td class=""><a
+                        <td class=""><a target="_blank"  
                                 class="bg-blue-800 text-white py-2 px-6 rounded-lg hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 href="{% url 'bill_pdf' pk=data.id %}">Bill</a></td>
                     </tr>
@@ -562,7 +564,7 @@
 <script>
 
 function successMessage() {
-    var alertContainer = document.getElementById('msg-box');
+    var alertContainer = document.querySelector('.msg-box');
     
     const newMessage = document.createElement("div");
     newMessage.className = "p-4 mb-4 text-sm text-center text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800";
@@ -587,7 +589,7 @@ function successMessage() {
 
 
 function errorMessage() {
-    var alertContainer = document.getElementById('msg-box');
+    var alertContainer = document.querySelector('.msg-box');
     
     const newMessage = document.createElement("div");
     newMessage.className = "p-4 mb-4 text-sm text-center text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800";
@@ -621,7 +623,7 @@ const loadProductMsg = async () => {
 
         const messages = data.messages;
         if (messages && messages.length > 0) {
-            const alertContainer = document.getElementById('msg-box');
+            const alertContainer = document.querySelector('.msg-box');
 
             messages.forEach((message) => {
                 const newMessage = document.createElement("div");
@@ -650,7 +652,9 @@ const loadProductMsg = async () => {
     }
 }
 
-
+window.onload = ()=>{
+    loadProductMsg();
+}
 
     const date_input = document.getElementById('date');
     const currentDate = new Date();
@@ -2381,12 +2385,11 @@ formElement.addEventListener('submit', (e) => {
     })
     .then(response => response.json())
     .then(data => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
         successMessage();
         loadProductMsg()
         $('#table_div')
         formElement.reset();
-        
+        window.location.reload()
         
         // Reset the form after successful submission
         // console.log("success", data);
