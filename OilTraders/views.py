@@ -44,7 +44,6 @@ def login(request):
 
 def logoutUser(request):
     if request.user.is_authenticated:
-        print(request.user)
         auth_logout(request)
     else:    
         return redirect("home")
@@ -225,7 +224,6 @@ def new_entry(request):
     if request.method == "POST":
         try:
             data = json.loads(request.body.decode())
-            print(data)
             try:
                 product_subtract(data)
             except Exception as e:
@@ -343,7 +341,6 @@ def generate_report(request):
                     total_profit += profit  # Total profit calculated above
                     
                     if product_name in items_sold:
-                        print(items_sold[product_name])
                         items_sold[product_name]['qty'] += qty
                         items_sold[product_name]['sale_price'] += sale_price
                     else:
