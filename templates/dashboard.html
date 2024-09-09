@@ -26,7 +26,17 @@
 </head>
 
 <style>
+    .select2-selection__rendered {
+        line-height: 42px !important;
+    }
 
+    .select2-container .select2-selection--single {
+        height: 47px !important;
+    }
+
+    .select2-selection__arrow {
+        height: 46px !important;
+    }
 </style>
 
 <body>
@@ -65,7 +75,7 @@
     </nav>
 
 
-    
+
 
     <!-- <div class="flex justify-center items-center flex-col">
         <h1 class="text-center my-4 text-3xl text-gray-800 font-bold">Products Information</h1>
@@ -152,16 +162,14 @@
                     <div class="flex flex-col">
                         <label for="last_reading" class="text-gray-700 font-semibold mb-2">Last Reading</label>
                         <input type="number" id="last_reading" name="last_reading"
-                            class="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            >
+                            class="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                     </div>
 
                     <!-- Next Reading Field -->
                     <div class="flex flex-col">
                         <label for="next_reading" class="text-gray-700 font-semibold mb-2">Next Reading</label>
                         <input type="number" id="next_reading" name="next_reading"
-                            class="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            >
+                            class="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                     </div>
 
 
@@ -169,10 +177,9 @@
                         <label for="next_changing_date" class="text-gray-700 font-semibold mb-2">Next Changing
                             Date</label>
                         <input type="date" id="next_changing_date" name="next_changing_date"
-                            class="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            >
+                            class="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                     </div>
-                    
+
                 </div>
 
                 <hr class="my-4 border-2 border-gray-300 ">
@@ -192,7 +199,7 @@
                         <input min="1" max="50" type="number" id="oil_quantity" name='oil_quantity'
                             onchange="changeOilQty(this)"
                             class="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            placeholder="500" >
+                            placeholder="500">
                     </div>
                     <div class="flex flex-col">
                         <label data-single-price="0" id="enigne_Oil_price">0</label>
@@ -217,7 +224,7 @@
                         <input min="1" max="50" type="number" id="oilfilter_quantity" name='oil_filter_quantity'
                             onchange="changeOilFilterQty(this)"
                             class="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            placeholder="500" >
+                            placeholder="500">
                     </div>
                     <div class="flex flex-col">
                         <label data-single-price="0" id="Oilfilter_price">0</label>
@@ -242,7 +249,7 @@
                         <input min="1" max="50" type="number" id="airfilter_quantity" name='air_filter_quantity'
                             onchange="changeAirFilterQty(this)"
                             class="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            placeholder="500" >
+                            placeholder="500">
                     </div>
                     <div class="flex flex-col">
                         <label data-single-price="0" id="airfilter_price">0</label>
@@ -267,7 +274,7 @@
                         <input min="1" max="50" type="number" id="acfilter_quantity" name='ac_filter_quantity'
                             onchange="changeACFilterQty(this)"
                             class="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            placeholder="500" >
+                            placeholder="500">
                     </div>
                     <div class="flex flex-col">
                         <label data-single-price="0" id="acfilter_price">0</label>
@@ -292,7 +299,7 @@
                         <label for="spare_quantity" class="text-gray-700 font-semibold mb-2">Quantity</label>
                         <input type="number" id="spare_quantity" name="spare_quantity"
                             class="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            placeholder="500" onchange="spareChangeQty(this)" >
+                            placeholder="500" onchange="spareChangeQty(this)">
 
                     </div>
 
@@ -319,7 +326,7 @@
                         <input min="1" max="50" type="number" id="body_quantity" name='body_parts_quantity'
                             onchange="changeBodyQty(this)"
                             class="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            placeholder="500" >
+                            placeholder="500">
                     </div>
                     <div class="flex flex-col">
                         <label data-single-price="0" id="body_parts_price">0</label>
@@ -341,9 +348,9 @@
 
                     <div class="flex flex-col">
                         <label for="cng_parts_quantity" class="text-gray-700 font-semibold mb-2">Quantity</label>
-                        <input  min="1" max="50" type="number" id="cng_quantity" name="cng_parts_quantity"
+                        <input min="1" max="50" type="number" id="cng_quantity" name="cng_parts_quantity"
                             class="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            placeholder="500" onchange="changeCngQty(this)" >
+                            placeholder="500" onchange="changeCngQty(this)">
                     </div>
                     <div class="flex flex-col">
                         <label data-single-price="0" id="cng_parts_price">0</label>
@@ -368,7 +375,7 @@
                         <input min="1" max="50" type="number" id="kabli_quantity" onchange="changeKabliQty(this)"
                             name="kabli_parts_quantity"
                             class="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            placeholder="500" >
+                            placeholder="500">
                     </div>
                     <div class="flex flex-col">
                         <label data-single-price="0" id="kabli_parts_price">0</label>
@@ -394,7 +401,7 @@
                             Quantity</label>
                         <input type="number" id="decoration_quantity" name="decoration_quantity"
                             class="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            placeholder="500" onchange="changedecorationQty(this)" >
+                            placeholder="500" onchange="changedecorationQty(this)">
                     </div>
                     <div class="flex flex-col">
                         <label data-single-price="0" id="decoration_parts_price">0</label>
@@ -419,7 +426,7 @@
                             Quantity</label>
                         <input type="number" id="silencer_quantity" name="silencer_quantity"
                             class="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            placeholder="500" onchange="changeSilencerQty(this)" >
+                            placeholder="500" onchange="changeSilencerQty(this)">
                     </div>
                     <div class="flex flex-col">
                         <label data-single-price="0" id="silencer_parts_price">0</label>
@@ -444,7 +451,7 @@
                             Quantity</label>
                         <input type="number" id="wholeSale_quantity" name="wholeSale_quantity"
                             class="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            placeholder="500" onchange="changewholeSaleQty(this)" >
+                            placeholder="500" onchange="changewholeSaleQty(this)">
                     </div>
                     <div class="flex flex-col">
                         <label data-single-price="0" id="wholeSale_parts_price">0</label>
@@ -462,16 +469,16 @@
                         class="bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
                         Submit
                     </button>
-                    
+
                 </div>
             </form>
         </div>
     </div>
 
     <hr class="mt-10 ">
-        <div class="msg-box" class="mt-20">
+    <div class="msg-box" class="mt-20">
 
-        </div>
+    </div>
     <hr class="mt-10 ">
 
     <div id="table_div" class="flex justify-center items-center mt-10">
@@ -508,7 +515,7 @@
                         <td class=""><a target="_blank"
                                 class="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 href="{% url 'invoice_pdf' pk=data.id %}">Oil Info</a></td>
-                        <td class=""><a target="_blank"  
+                        <td class=""><a target="_blank"
                                 class="bg-blue-800 text-white py-2 px-6 rounded-lg hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 href="{% url 'bill_pdf' pk=data.id %}">Bill</a></td>
                     </tr>
@@ -521,10 +528,10 @@
 
     <script>
         $(document).ready(function () {
-        $('#example').DataTable({
-            "order": [[0, 'desc']]  // Make sure DataTables respects your server-side sorting
+            $('#example').DataTable({
+                "order": [[0, 'desc']]  // Make sure DataTables respects your server-side sorting
+            });
         });
-    });
     </script>
 
 
@@ -563,98 +570,98 @@
 </body>
 <script>
 
-function successMessage() {
-    var alertContainer = document.querySelector('.msg-box');
-    
-    const newMessage = document.createElement("div");
-    newMessage.className = "p-4 mb-4 text-sm text-center text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800";
-    newMessage.textContent = "Form Submitted successfully!"; // Add your success message here
-    
-    // Optionally, add a close button to dismiss the alert
-    const closeButton = document.createElement("button");
-    closeButton.className = "ml-auto -mx-1.5 -my-1.5 bg-green-100 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 dark:bg-green-200 dark:text-green-800 dark:hover:bg-green-300";
-    closeButton.innerHTML = '<span class="sr-only">Close</span><svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414 1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>';
-    closeButton.onclick = function() {
-        newMessage.remove();
-    };
+    function successMessage() {
+        var alertContainer = document.querySelector('.msg-box');
 
-    newMessage.appendChild(closeButton);
-    alertContainer.appendChild(newMessage);
+        const newMessage = document.createElement("div");
+        newMessage.className = "p-4 mb-4 text-sm text-center text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800";
+        newMessage.textContent = "Form Submitted successfully!"; // Add your success message here
 
-    setTimeout(() => {
-        newMessage.remove();
-    }, 3000);
-}
+        // Optionally, add a close button to dismiss the alert
+        const closeButton = document.createElement("button");
+        closeButton.className = "ml-auto -mx-1.5 -my-1.5 bg-green-100 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 dark:bg-green-200 dark:text-green-800 dark:hover:bg-green-300";
+        closeButton.innerHTML = '<span class="sr-only">Close</span><svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414 1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>';
+        closeButton.onclick = function () {
+            newMessage.remove();
+        };
 
+        newMessage.appendChild(closeButton);
+        alertContainer.appendChild(newMessage);
 
-
-function errorMessage() {
-    var alertContainer = document.querySelector('.msg-box');
-    
-    const newMessage = document.createElement("div");
-    newMessage.className = "p-4 mb-4 text-sm text-center text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800";
-    newMessage.textContent = "An error occurred! Please try again."; // Add your error message here
-    
-    // Optionally, add a close button to dismiss the alert
-    const closeButton = document.createElement("button");
-    closeButton.className = "ml-auto -mx-1.5 -my-1.5 bg-red-100 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 dark:bg-red-200 dark:text-red-800 dark:hover:bg-red-300";
-    closeButton.innerHTML = '<span class="sr-only">Close</span><svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414 1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>';
-    closeButton.onclick = function() {
-        newMessage.remove();
-    };
-
-    newMessage.appendChild(closeButton);
-    alertContainer.appendChild(newMessage);
-
-    setTimeout(() => {
-        newMessage.remove();
-    }, 3000);
-}
-
-
-
-const loadProductMsg = async () => {
-    try {
-        const response = await fetch('/alertLowProduct/');
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-
-        const messages = data.messages;
-        if (messages && messages.length > 0) {
-            const alertContainer = document.querySelector('.msg-box');
-
-            messages.forEach((message) => {
-                const newMessage = document.createElement("div");
-                newMessage.className = "p-4 mb-4 text-sm text-center text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800";
-                newMessage.textContent = message;
-
-                // Optionally, add a close button to dismiss the alert
-                const closeButton = document.createElement("button");
-                closeButton.className = "ml-auto -mx-1.5 -my-1.5 bg-red-100 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 dark:bg-red-200 dark:text-red-800 dark:hover:bg-red-300";
-                closeButton.innerHTML = '<span class="sr-only">Close</span><svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414 1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>';
-                closeButton.onclick = function() {
-                    newMessage.remove();
-                };
-
-                newMessage.appendChild(closeButton);
-                alertContainer.appendChild(newMessage);
-
-                // Optionally, remove the message after a delay
-                setTimeout(() => {
-                    newMessage.remove();
-                }, 20000);
-            });
-        }
-    } catch (error) {
-        console.error('Error fetching message:', error);
+        setTimeout(() => {
+            newMessage.remove();
+        }, 3000);
     }
-}
 
-window.onload = ()=>{
-    loadProductMsg();
-}
+
+
+    function errorMessage() {
+        var alertContainer = document.querySelector('.msg-box');
+
+        const newMessage = document.createElement("div");
+        newMessage.className = "p-4 mb-4 text-sm text-center text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800";
+        newMessage.textContent = "An error occurred! Please try again."; // Add your error message here
+
+        // Optionally, add a close button to dismiss the alert
+        const closeButton = document.createElement("button");
+        closeButton.className = "ml-auto -mx-1.5 -my-1.5 bg-red-100 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 dark:bg-red-200 dark:text-red-800 dark:hover:bg-red-300";
+        closeButton.innerHTML = '<span class="sr-only">Close</span><svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414 1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>';
+        closeButton.onclick = function () {
+            newMessage.remove();
+        };
+
+        newMessage.appendChild(closeButton);
+        alertContainer.appendChild(newMessage);
+
+        setTimeout(() => {
+            newMessage.remove();
+        }, 3000);
+    }
+
+
+
+    const loadProductMsg = async () => {
+        try {
+            const response = await fetch('/alertLowProduct/');
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+
+            const messages = data.messages;
+            if (messages && messages.length > 0) {
+                const alertContainer = document.querySelector('.msg-box');
+
+                messages.forEach((message) => {
+                    const newMessage = document.createElement("div");
+                    newMessage.className = "p-4 mb-4 text-sm text-center text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800";
+                    newMessage.textContent = message;
+
+                    // Optionally, add a close button to dismiss the alert
+                    const closeButton = document.createElement("button");
+                    closeButton.className = "ml-auto -mx-1.5 -my-1.5 bg-red-100 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 dark:bg-red-200 dark:text-red-800 dark:hover:bg-red-300";
+                    closeButton.innerHTML = '<span class="sr-only">Close</span><svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414 1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>';
+                    closeButton.onclick = function () {
+                        newMessage.remove();
+                    };
+
+                    newMessage.appendChild(closeButton);
+                    alertContainer.appendChild(newMessage);
+
+                    // Optionally, remove the message after a delay
+                    setTimeout(() => {
+                        newMessage.remove();
+                    }, 20000);
+                });
+            }
+        } catch (error) {
+            console.error('Error fetching message:', error);
+        }
+    }
+
+    window.onload = () => {
+        loadProductMsg();
+    }
 
     const date_input = document.getElementById('date');
     const currentDate = new Date();
@@ -706,7 +713,7 @@ window.onload = ()=>{
     $('.select2-selection__arrow').append('<i class="fa fa-angle-down"></i>');
 
 
-    const loadOil = (new_element)=> {
+    const loadOil = (new_element) => {
         const all_oils = JSON.parse('{{ all_oil| safe}}')
 
         for (const oil of all_oils) {
@@ -714,7 +721,7 @@ window.onload = ()=>{
             //             ${oil.fields.name}
             //             </option>`;
 
-           let html = `<option value='${oil.pk}' data-price='${oil.fields.sale_price}'> 
+            let html = `<option value='${oil.pk}' data-price='${oil.fields.sale_price}'> 
                         ${oil.fields.name}
                         </option>`
 
@@ -725,13 +732,13 @@ window.onload = ()=>{
 
     function selectOilPartsPrice(selectElement) {
         let selectedOption = $(selectElement).find(":selected");
-        
+
 
         selectedOption = selectedOption[0]
-        
+
         var row_number = selectElement.id
         row_number = row_number.split("_")
-        
+
         const price = selectedOption.getAttribute('data-price');
         const id = selectedOption.value;
         // // console.log(selectElement)
@@ -756,7 +763,7 @@ window.onload = ()=>{
         }
 
         let row_number_arr = get_row_number.split("_")
-        console.log("oil",row_number_arr)
+        console.log("oil", row_number_arr)
         if (row_number_arr.length > 2) {
             old_price = $(`#engine-oil-price-${row_number_arr[2]}`).attr("data-single-price")
             new_price = qty * old_price;
@@ -773,14 +780,14 @@ window.onload = ()=>{
         let oil_items = []
         const a = $("#oil_container").children()
         for (let i = 0; i < a.length; i = i + 3) {
-            
+
             const item_name_element = a[i].children[1]
             let item_naaam = $(item_name_element).find(":selected");
             const item_qty_element_id = a[i + 1].children[0]
-            
+
             const item_qty_element = a[i + 1].children[1]
             const item_price_element = a[i + 2]
-           
+
             if (item_qty_element.value != '' && item_qty_element.value != '0') {
                 let item = {
                     "name": item_naaam[0].innerText.replaceAll("\n", "").replaceAll(/\s+/g, " ").trim(),
@@ -826,23 +833,22 @@ window.onload = ()=>{
 
             // Load oil parts into the newly added select element
             const newSelect = oil_container.querySelector(`#engine_oil_${rowCount}`);
+            loadOil(newSelect);
+            $(newSelect).select2();
             const oilQty = oil_container.querySelector(`#oil_quantity_${rowCount}`);
 
-            newSelect.addEventListener("change", function () {
-                
-                selectOilPartsPrice(newSelect)
 
+
+
+
+            $(newSelect).on("change", () => {
+                selectOilPartsPrice(newSelect)
             })
+
             oilQty.addEventListener("change", function () {
                 changeOilQty(oilQty)
             })
-            if (newSelect) {
 
-                loadOil(newSelect);
-            }
-            // $(document).ready(function () {
-            //     $('select').select2();
-            // });
         } else {
             console.error('body_container not found');
         }
@@ -856,7 +862,7 @@ window.onload = ()=>{
 
 
 
-    const loadWholeSale = (new_element)=> {
+    const loadWholeSale = (new_element) => {
         const all_wholeSale = JSON.parse('{{ all_wholeSale| safe}}')
 
         for (const oil of all_wholeSale) {
@@ -864,7 +870,7 @@ window.onload = ()=>{
             //             ${oil.fields.name}
             //             </option>`;
 
-           let html = `<option value='${oil.pk}' data-price='${oil.fields.sale_price}'> 
+            let html = `<option value='${oil.pk}' data-price='${oil.fields.sale_price}'> 
                         ${oil.fields.name}
                         </option>`
 
@@ -878,7 +884,7 @@ window.onload = ()=>{
         console.log(selectedOption)
 
         selectedOption = selectedOption[0]
-        
+
         var row_number = selectElement.id
         row_number = row_number.split("_")
         console.log(row_number)
@@ -906,7 +912,7 @@ window.onload = ()=>{
         }
 
         let row_number_arr = get_row_number.split("_")
-        console.log("oil",row_number_arr)
+        console.log("oil", row_number_arr)
         if (row_number_arr.length > 2) {
             old_price = $(`#wholeSale_parts-price-${row_number_arr[2]}`).attr("data-single-price")
             new_price = qty * old_price;
@@ -923,14 +929,14 @@ window.onload = ()=>{
         let wholeSale = []
         const a = $("#wholeSale_container").children()
         for (let i = 0; i < a.length; i = i + 3) {
-            
+
             const item_name_element = a[i].children[1]
             let item_naaam = $(item_name_element).find(":selected");
             const item_qty_element_id = a[i + 1].children[0]
-            
+
             const item_qty_element = a[i + 1].children[1]
             const item_price_element = a[i + 2]
-           
+
             if (item_qty_element.value != '' && item_qty_element.value != '0') {
                 let item = {
                     "name": item_naaam[0].innerText.replaceAll("\n", "").replaceAll(/\s+/g, " ").trim(),
@@ -976,20 +982,22 @@ window.onload = ()=>{
 
             // Load oil parts into the newly added select element
             const newSelect = wholeSale_container.querySelector(`#wholeSale_parts_${rowCount}`);
+            loadWholeSale(newSelect);
+            $(newSelect).select2();
             const wholeSaleQty = wholeSale_container.querySelector(`#wholeSale_quantity_${rowCount}`);
 
-            newSelect.addEventListener("change", function () {
-                
+            $(newSelect).on("change", () => {
+
                 selectwholeSalePartsPrice(newSelect)
 
             })
             wholeSaleQty.addEventListener("change", function () {
                 changewholeSaleQty(wholeSaleQty)
             })
-            if (newSelect) {
 
-                loadWholeSale(newSelect);
-            }
+
+
+
             // $(document).ready(function () {
             //     $('select').select2();
             // });
@@ -1000,7 +1008,7 @@ window.onload = ()=>{
 
 
 
-    const loadOilFilter = (new_element)=> {
+    const loadOilFilter = (new_element) => {
         const all_oil_filter = JSON.parse('{{ all_oil_filter| safe}}')
 
         for (const oil of all_oil_filter) {
@@ -1008,7 +1016,7 @@ window.onload = ()=>{
             //             ${oil.fields.name}
             //             </option>`;
 
-           let html = `<option value='${oil.pk}' data-price='${oil.fields.sale_price}'> 
+            let html = `<option value='${oil.pk}' data-price='${oil.fields.sale_price}'> 
                         ${oil.fields.name}
                         </option>`
 
@@ -1022,7 +1030,7 @@ window.onload = ()=>{
         console.log(selectedOption)
 
         selectedOption = selectedOption[0]
-        
+
         var row_number = selectElement.id
         row_number = row_number.split("_")
         console.log(row_number)
@@ -1050,7 +1058,7 @@ window.onload = ()=>{
         }
 
         let row_number_arr = get_row_number.split("_")
-        
+
         if (row_number_arr.length > 2) {
             old_price = $(`#Oilfilter-price-${row_number_arr[2]}`).attr("data-single-price")
             new_price = qty * old_price;
@@ -1067,14 +1075,14 @@ window.onload = ()=>{
         let oil_filter_items = []
         const a = $("#oil_filter_container").children()
         for (let i = 0; i < a.length; i = i + 3) {
-            
+
             const item_name_element = a[i].children[1]
             let item_naaam = $(item_name_element).find(":selected");
             const item_qty_element_id = a[i + 1].children[0]
-            
+
             const item_qty_element = a[i + 1].children[1]
             const item_price_element = a[i + 2]
-           
+
             if (item_qty_element.value != '' && item_qty_element.value != '0') {
                 let item = {
                     "name": item_naaam[0].innerText.replaceAll("\n", "").replaceAll(/\s+/g, " ").trim(),
@@ -1120,20 +1128,21 @@ window.onload = ()=>{
 
             // Load oil parts into the newly added select element
             const newSelect = oil_filter_container.querySelector(`#oil_filter_${rowCount}`);
+            loadOilFilter(newSelect);
+            $(newSelect).select2();
             const oilQty = oil_filter_container.querySelector(`#oilfilter_quantity_${rowCount}`);
 
-            newSelect.addEventListener("change", function () {
-                
+            $(newSelect).on("change", () => {
+
                 selectOilFilterPrice(newSelect)
 
             })
             oilQty.addEventListener("change", function () {
                 changeOilFilterQty(oilQty)
             })
-            if (newSelect) {
 
-                loadOilFilter(newSelect);
-            }
+
+
             // $(document).ready(function () {
             //     $('select').select2();
             // });
@@ -1146,7 +1155,7 @@ window.onload = ()=>{
 
     const loadAirFilter = (newSelect) => {
         const all_air_filter = JSON.parse('{{ all_air_filter| safe}}')
-        
+
 
         for (const parts of all_air_filter) {
             let html = `<option value='${parts.pk}' data-price='${parts.fields.sale_price}'> 
@@ -1158,12 +1167,12 @@ window.onload = ()=>{
     }
 
     function selectAirFilterPrice(selectElement) {
-        
+
         let selectedOption = $(selectElement).find(":selected");
-        
+
 
         selectedOption = selectedOption[0]
-        
+
         var row_number = selectElement.id
         row_number = row_number.split("_")
 
@@ -1191,7 +1200,7 @@ window.onload = ()=>{
         }
 
         let row_number_arr = get_row_number.split("_")
-        
+
         if (row_number_arr.length > 2) {
             old_price = $(`#airfilter-price-${row_number_arr[2]}`).attr("data-single-price")
             new_price = qty * old_price;
@@ -1208,14 +1217,14 @@ window.onload = ()=>{
         let air_filter_items = []
         const a = $("#air_filter_container").children()
         for (let i = 0; i < a.length; i = i + 3) {
-            
+
             const item_name_element = a[i].children[1]
             let item_naaam = $(item_name_element).find(":selected");
             const item_qty_element_id = a[i + 1].children[0]
-            
+
             const item_qty_element = a[i + 1].children[1]
             const item_price_element = a[i + 2]
-           
+
             if (item_qty_element.value != '' && item_qty_element.value != '0') {
                 let item = {
                     "name": item_naaam[0].innerText.replaceAll("\n", "").replaceAll(/\s+/g, " ").trim(),
@@ -1233,7 +1242,7 @@ window.onload = ()=>{
     air_filter_row = document.getElementById('air_filter_row')
     document.getElementById('air_filter_row').addEventListener('click', (e) => {
         e.preventDefault();
-        
+
         // Ensure the container exists
         const air_filter_container = document.getElementById('air_filter_container');
         if (air_filter_container) {
@@ -1263,17 +1272,18 @@ window.onload = ()=>{
             const newSelect = air_filter_container.querySelector(`#air_filter_${rowCount}`);
             const airFilterQty = air_filter_container.querySelector(`#airfilter_quantity_${rowCount}`);
             // loadAirFilter(newSelect);
-            newSelect.addEventListener("change", function () {
-                
+            loadAirFilter(newSelect);
+            $(newSelect).select2();
+            $(newSelect).on("change", () => {
+
                 selectAirFilterPrice(newSelect)
 
             })
             airFilterQty.addEventListener("change", function () {
                 changeAirFilterQty(airFilterQty)
             })
-            if (newSelect) {
-                loadAirFilter(newSelect);
-            }
+
+
             // $(document).ready(function () {
             //     $('select').select2();
             // });
@@ -1286,7 +1296,7 @@ window.onload = ()=>{
 
     const loadACFilter = (newSelect) => {
         const all_ac_filter = JSON.parse('{{ all_ac_filter| safe}}')
-        
+
 
         for (const parts of all_ac_filter) {
             let html = `<option value='${parts.pk}' data-price='${parts.fields.sale_price}'> 
@@ -1299,10 +1309,10 @@ window.onload = ()=>{
 
     function selectACFilterPrice(selectElement) {
         let selectedOption = $(selectElement).find(":selected");
-        
+
 
         selectedOption = selectedOption[0]
-        
+
         var row_number = selectElement.id
         row_number = row_number.split("_")
 
@@ -1330,7 +1340,7 @@ window.onload = ()=>{
         }
 
         let row_number_arr = get_row_number.split("_")
-        
+
         if (row_number_arr.length > 2) {
             old_price = $(`#acfilter-price-${row_number_arr[2]}`).attr("data-single-price")
             new_price = qty * old_price;
@@ -1347,14 +1357,14 @@ window.onload = ()=>{
         let ac_filter_items = []
         const a = $("#ac_filter_container").children()
         for (let i = 0; i < a.length; i = i + 3) {
-            
+
             const item_name_element = a[i].children[1]
             let item_naaam = $(item_name_element).find(":selected");
             const item_qty_element_id = a[i + 1].children[0]
-            
+
             const item_qty_element = a[i + 1].children[1]
             const item_price_element = a[i + 2]
-           
+
             if (item_qty_element.value != '' && item_qty_element.value != '0') {
                 let item = {
                     "name": item_naaam[0].innerText.replaceAll("\n", "").replaceAll(/\s+/g, " ").trim(),
@@ -1400,20 +1410,19 @@ window.onload = ()=>{
 
             // Load body parts into the newly added select element
             const newSelect = ac_filter_container.querySelector(`#ac_filter_${rowCount}`);
+            loadACFilter(newSelect);
+            $(newSelect).select2();
             const acFilterQty = ac_filter_container.querySelector(`#acfilter_quantity_${rowCount}`);
 
-            newSelect.addEventListener("change", function () {
-                
+            $(newSelect).on("change", () => {
+
                 selectACFilterPrice(newSelect)
 
             })
             acFilterQty.addEventListener("change", function () {
                 changeACFilterQty(acFilterQty)
             })
-            if (newSelect) {
 
-                loadACFilter(newSelect);
-            }
             // $(document).ready(function () {
             //     $('select').select2();
             // });
@@ -1432,7 +1441,7 @@ window.onload = ()=>{
 
     const bodyParts = (newSelect) => {
         const all_body_parts = JSON.parse('{{ all_body_parts| safe}}')
-        
+
 
         for (const parts of all_body_parts) {
             let html = `<option value='${parts.pk}' data-price='${parts.fields.sale_price}'> 
@@ -1445,10 +1454,10 @@ window.onload = ()=>{
 
     function selectBodyPartsPrice(selectElement) {
         let selectedOption = $(selectElement).find(":selected");
-        
+
 
         selectedOption = selectedOption[0]
-        
+
         var row_number = selectElement.id
         row_number = row_number.split("_")
 
@@ -1476,7 +1485,7 @@ window.onload = ()=>{
         }
 
         let row_number_arr = get_row_number.split("_")
-        
+
         if (row_number_arr.length > 2) {
             old_price = $(`#body-parts-price-${row_number_arr[2]}`).attr("data-single-price")
             new_price = qty * old_price;
@@ -1493,14 +1502,14 @@ window.onload = ()=>{
         let body_items = []
         const a = $("#body_container").children()
         for (let i = 0; i < a.length; i = i + 3) {
-            
+
             const item_name_element = a[i].children[1]
             let item_naaam = $(item_name_element).find(":selected");
             const item_qty_element_id = a[i + 1].children[0]
-            
+
             const item_qty_element = a[i + 1].children[1]
             const item_price_element = a[i + 2]
-           
+
             if (item_qty_element.value != '' && item_qty_element.value != '0') {
                 let item = {
                     "name": item_naaam[0].innerText.replaceAll("\n", "").replaceAll(/\s+/g, " ").trim(),
@@ -1546,20 +1555,19 @@ window.onload = ()=>{
 
             // Load body parts into the newly added select element
             const newSelect = body_container.querySelector(`#body_parts_${rowCount}`);
+            bodyParts(newSelect);
+            $(newSelect).select2();
             const bodyQty = body_container.querySelector(`#body_quantity_${rowCount}`);
 
-            newSelect.addEventListener("change", function () {
-                
+            $(newSelect).on("change", () => {
+
                 selectBodyPartsPrice(newSelect)
 
             })
             bodyQty.addEventListener("change", function () {
                 changeBodyQty(bodyQty)
             })
-            if (newSelect) {
 
-                bodyParts(newSelect);
-            }
             // $(document).ready(function () {
             //     $('select').select2();
             // });
@@ -1598,10 +1606,10 @@ window.onload = ()=>{
         spareId = selectedOption.value
         const price = selectedOption.getAttribute('data-price');
         const row_number = selectElement.id;
-      
+
         new_row = row_number.split("_")
-        
-        if(new_row.length > 2){
+
+        if (new_row.length > 2) {
             $(`#spare-parts-price-${new_row[2]}`).text(price)
             $(`#spare_quantity_${new_row[2]}`).val(1)
             $(`#spare-parts-price-${new_row[2]}`).attr("data-single-price", price)
@@ -1613,23 +1621,23 @@ window.onload = ()=>{
         }
 
 
-        
+
         // $("input[name='spare_parts_id']").val(id);
         // $("input[name='spare_parts_price[]']").val(price);
-       
+
 
     }
 
-    function spareChangeQty(qty_element){
+    function spareChangeQty(qty_element) {
         const get_row_number = qty_element.id
-        
+
         const qty = Math.abs(qty_element.value);
         if (qty < 1) {
             return
         }
 
         let row_number_arr = get_row_number.split("_")
-        
+
         if (row_number_arr.length > 2) {
             old_price = $(`#spare-parts-price-${row_number_arr[2]}`).attr("data-single-price")
             new_price = qty * old_price;
@@ -1641,20 +1649,20 @@ window.onload = ()=>{
         }
 
     }
-    
+
     function getSpareSelectedItems() {
         let spare_items = []
         const a = $("#spare_container").children()
-        
+
         for (let i = 0; i < a.length; i = i + 3) {
             const item_name_element = a[i].children[1]
-            
+
             let item_naaam = $(item_name_element).find(":selected");
-            
+
             const item_qty_element = a[i + 1].children[1]
-            
+
             const item_price_element = a[i + 2]
-           
+
             if (item_qty_element.value != '' && item_qty_element.value != '0') {
                 let item = {
                     "name": item_naaam[0].innerText.replaceAll("\n", "").replaceAll(/\s+/g, " ").trim(),
@@ -1668,7 +1676,7 @@ window.onload = ()=>{
         return spare_items
     }
 
-    
+
     add_spare_row = document.getElementById('add_spare_row')
     document.getElementById('add_spare_row').addEventListener('click', (e) => {
         e.preventDefault();
@@ -1703,14 +1711,16 @@ window.onload = ()=>{
 
             // Load spare parts into the newly added select element
             const newSelect = spare_container.querySelector(`#spare_parts_${rowCount}`);
+            spareParts(newSelect);
+            $(newSelect).select2();
             const spareQty = spare_container.querySelector(`#spare_quantity_${rowCount}`);
-            
-            newSelect.addEventListener('change', function(){selectSparePartsPrice(newSelect)})
-            spareQty.addEventListener('change', function(){spareChangeQty(spareQty)})
 
-            if (newSelect) {
-                spareParts(newSelect);
-            }
+            $(newSelect).on('change', () => {
+                selectSparePartsPrice(newSelect)
+            })
+            spareQty.addEventListener('change', function () { spareChangeQty(spareQty) })
+
+
         } else {
             console.error('spare_container not found');
         }
@@ -1737,10 +1747,10 @@ window.onload = ()=>{
         spareId = selectedOption.value
         const price = selectedOption.getAttribute('data-price');
         const row_number = selectElement.id;
-      
+
         new_row = row_number.split("_")
-        
-        if(new_row.length > 2){
+
+        if (new_row.length > 2) {
             $(`#cng-parts-price-${new_row[2]}`).text(price)
             $(`#cng_quantity_${new_row[2]}`).val(1)
             $(`#cng-parts-price-${new_row[2]}`).attr("data-single-price", price)
@@ -1752,23 +1762,23 @@ window.onload = ()=>{
         }
     }
 
-    function changeCngQty(qty_element){
+    function changeCngQty(qty_element) {
         const get_row_number = qty_element.id
         const qty = Math.abs(qty_element.value);
-        
+
         if (qty < 1) {
             return
         }
 
         let row_number_arr = get_row_number.split("_")
-        
+
         if (row_number_arr.length > 2) {
             old_price = $(`#cng-parts-price-${row_number_arr[2]}`).attr("data-single-price")
             new_price = qty * old_price;
             $(`#cng-parts-price-${row_number_arr[2]}`).text(new_price);
         } else {
             old_price = $("#cng_parts_price").attr("data-single-price")
-            
+
             new_price = qty * old_price;
             $("#cng_parts_price").text(new_price);
         }
@@ -1778,16 +1788,16 @@ window.onload = ()=>{
     function getCngSelectedItems() {
         let cng_items = []
         const a = $("#cng_container").children()
-        
+
         for (let i = 0; i < a.length; i = i + 3) {
             const item_name_element = a[i].children[1]
-            
+
             let item_naaam = $(item_name_element).find(":selected");
-            
+
             const item_qty_element = a[i + 1].children[1]
-            
+
             const item_price_element = a[i + 2]
-           
+
             if (item_qty_element.value != '' && item_qty_element.value != '0') {
                 let item = {
                     "name": item_naaam[0].innerText.replaceAll("\n", "").replaceAll(/\s+/g, " ").trim(),
@@ -1833,17 +1843,18 @@ window.onload = ()=>{
 
             // Load cng parts into the newly added select element
             const newSelect = cng_container.querySelector(`#cng_parts_${rowCount}`);
+            cngParts(newSelect);
+            $(newSelect).select2();
             const cngQty = cng_container.querySelector(`#cng_quantity_${rowCount}`);
-            
-            
 
-            newSelect.addEventListener("change",function(){selectcngPartsPrice(newSelect)})
-            cngQty.addEventListener("change",function(){
-                
-                changeCngQty(cngQty)})
-            if (newSelect) {
-                cngParts(newSelect);
-            }
+
+
+            $(newSelect).on("change", () => { selectcngPartsPrice(newSelect) })
+            cngQty.addEventListener("change", function () {
+
+                changeCngQty(cngQty)
+            })
+
         } else {
             console.error('cng_container not found');
         }
@@ -1887,16 +1898,16 @@ window.onload = ()=>{
     function getKabaliSelectedItems() {
         let kabli_items = []
         const a = $("#kabli_container").children()
-        
+
         for (let i = 0; i < a.length; i = i + 3) {
             const item_name_element = a[i].children[1]
-            
+
             let item_naaam = $(item_name_element).find(":selected");
-            
+
             const item_qty_element = a[i + 1].children[1]
-            
+
             const item_price_element = a[i + 2]
-           
+
             if (item_qty_element.value != '' && item_qty_element.value != '0') {
                 let item = {
                     "name": item_naaam[0].innerText.replaceAll("\n", "").replaceAll(/\s+/g, " ").trim(),
@@ -1915,7 +1926,7 @@ window.onload = ()=>{
     function selectKabliPartsPrice(selectElement) {
         let selectedOption = $(selectElement).find(":selected");
         selectedOption = selectedOption[0]
-        
+
         var row_number = selectElement.id
         row_number = row_number.split("_")
         // // console.log(row_number);
@@ -1975,18 +1986,18 @@ window.onload = ()=>{
 
             // Load kabli parts into the newly added select element
             const newSelect = kabli_container.querySelector(`#kabli_parts_${rowCount}`);
+            kabliParts(newSelect);
+            $(newSelect).select2();
             const newQty = kabli_container.querySelector(`#kabli_quantity_${rowCount}`);
 
-            newSelect.addEventListener("change", function () {
+            $(newSelect).on("change", () => {
 
                 selectKabliPartsPrice(newSelect)
 
             })
             newQty.addEventListener("change", function () { changeKabliQty(newQty) });
 
-            if (newSelect) {
-                kabliParts(newSelect);
-            }
+
 
             // $(newSelect).select2();
 
@@ -2041,7 +2052,7 @@ window.onload = ()=>{
     function selectsilencerPartsPrice(selectElement) {
         let selectedOption = $(selectElement).find(":selected");
         selectedOption = selectedOption[0]
-        
+
         var row_number = selectElement.id
         row_number = row_number.split("_")
         // // console.log(row_number);
@@ -2065,16 +2076,16 @@ window.onload = ()=>{
     function getSilencerSelectedItems() {
         let silencer_items = []
         const a = $("#silencer_container").children()
-        
+
         for (let i = 0; i < a.length; i = i + 3) {
             const item_name_element = a[i].children[1]
-            
+
             let item_naaam = $(item_name_element).find(":selected");
-            
+
             const item_qty_element = a[i + 1].children[1]
-            
+
             const item_price_element = a[i + 2]
-           
+
             if (item_qty_element.value != '' && item_qty_element.value != '0') {
                 let item = {
                     "name": item_naaam[0].innerText.replaceAll("\n", "").replaceAll(/\s+/g, " ").trim(),
@@ -2120,18 +2131,18 @@ window.onload = ()=>{
 
             // Load silencer parts into the newly added select element
             const newSelect = silencer_container.querySelector(`#silencer_parts_${rowCount}`);
+            silencerParts(newSelect);
+            $(newSelect).select2();
             const newQty = silencer_container.querySelector(`#silencer_quantity_${rowCount}`);
 
-            newSelect.addEventListener("change", function () {
+            $(newSelect).on("change", () => {
 
                 selectsilencerPartsPrice(newSelect)
 
             })
             newQty.addEventListener("change", function () { changeSilencerQty(newQty) });
 
-            if (newSelect) {
-                silencerParts(newSelect);
-            }
+
 
             // $(newSelect).select2();
 
@@ -2204,16 +2215,16 @@ window.onload = ()=>{
     function getDecorationSelectedItems() {
         let decoration_items = []
         const a = $("#decoration_container").children()
-        
+
         for (let i = 0; i < a.length; i = i + 3) {
             const item_name_element = a[i].children[1]
-            
+
             let item_naaam = $(item_name_element).find(":selected");
-            
+
             const item_qty_element = a[i + 1].children[1]
-            
+
             const item_price_element = a[i + 2]
-           
+
             if (item_qty_element.value != '' && item_qty_element.value != '0') {
                 let item = {
                     "name": item_naaam[0].innerText.replaceAll("\n", "").replaceAll(/\s+/g, " ").trim(),
@@ -2260,18 +2271,18 @@ window.onload = ()=>{
 
             // Load decoration parts into the newly added select element
             const newSelect = decoration_container.querySelector(`#decoration_parts_${rowCount}`);
+            decorationParts(newSelect);
+            $(newSelect).select2();
             const newQty = decoration_container.querySelector(`#decoration_quantity_${rowCount}`);
 
-            newSelect.addEventListener("change", function () {
+            $(newSelect).on("change", () => {
 
                 selectDecorationrPartsPrice(newSelect)
 
             })
             newQty.addEventListener("change", function () { changedecorationQty(newQty) });
 
-            if (newSelect) {
-                decorationParts(newSelect);
-            }
+
 
             // $(newSelect).select2();
 
@@ -2286,7 +2297,7 @@ window.onload = ()=>{
 
     // const loadCustomer = async () => {
     //     const customers = JSON.parse('{{ existing_entries| safe}}');
-        
+
 
     //     for (const data of customers) {
     //         let fields = data.fields;
@@ -2348,59 +2359,59 @@ window.onload = ()=>{
     //     // console.log(selectedValues);
     //     return selectedValues;
     // }
-    
+
     const formElement = document.getElementById("my-form");
 
-formElement.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const myForm = e.target;
-    const formData = new FormData(myForm);
-    const formObject = {};
+    formElement.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const myForm = e.target;
+        const formData = new FormData(myForm);
+        const formObject = {};
 
-    formData.forEach((value, key) => {
-        formObject[key] = value;
+        formData.forEach((value, key) => {
+            formObject[key] = value;
+        });
+
+        // Add additional data as JSON strings
+        formObject.body_parts_data = JSON.stringify(getBodySelectedItems());
+        formObject.spare_parts_data = JSON.stringify(getSpareSelectedItems());
+        formObject.cng_parts_data = JSON.stringify(getCngSelectedItems());
+        formObject.kabli_parts_data = JSON.stringify(getKabaliSelectedItems());
+        formObject.decoration_parts_data = JSON.stringify(getDecorationSelectedItems());
+        formObject.silencer_parts_data = JSON.stringify(getSilencerSelectedItems());
+        formObject.engin_oil_data = JSON.stringify(getOilSelectedItems());
+        formObject.oil_filter_data = JSON.stringify(getOilFilterSelectedItems());
+        formObject.air_filter_data = JSON.stringify(getAirFilterSelectedItems());
+        formObject.ac_filter_data = JSON.stringify(getACSelectedItems());
+        formObject.whole_sale_data = JSON.stringify(getWholeSaleSelectedItems());
+
+        fetch('/new_entry/', {
+            method: 'POST',
+            body: JSON.stringify(formObject), // Convert the entire formObject to JSON
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                "Content-Type": "application/json",
+                'X-CSRFToken': '{{ csrf_token }}'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                successMessage();
+                loadProductMsg()
+                $('#table_div')
+                formElement.reset();
+                window.location.reload()
+
+                // Reset the form after successful submission
+                // console.log("success", data);
+            })
+            .catch(error => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                errorMessage();
+                //formElement.reset();
+
+            });
     });
-
-    // Add additional data as JSON strings
-    formObject.body_parts_data = JSON.stringify(getBodySelectedItems());
-    formObject.spare_parts_data = JSON.stringify(getSpareSelectedItems());
-    formObject.cng_parts_data = JSON.stringify(getCngSelectedItems());
-    formObject.kabli_parts_data = JSON.stringify(getKabaliSelectedItems());
-    formObject.decoration_parts_data = JSON.stringify(getDecorationSelectedItems());
-    formObject.silencer_parts_data = JSON.stringify(getSilencerSelectedItems());
-    formObject.engin_oil_data = JSON.stringify(getOilSelectedItems());
-    formObject.oil_filter_data = JSON.stringify(getOilFilterSelectedItems());
-    formObject.air_filter_data = JSON.stringify(getAirFilterSelectedItems());
-    formObject.ac_filter_data = JSON.stringify(getACSelectedItems());
-    formObject.whole_sale_data = JSON.stringify(getWholeSaleSelectedItems());
-
-    fetch('/new_entry/', {
-        method: 'POST',
-        body: JSON.stringify(formObject), // Convert the entire formObject to JSON
-        headers: {
-            'X-Requested-With': 'XMLHttpRequest',
-            "Content-Type": "application/json",
-            'X-CSRFToken': '{{ csrf_token }}'
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        successMessage();
-        loadProductMsg()
-        $('#table_div')
-        formElement.reset();
-        window.location.reload()
-        
-        // Reset the form after successful submission
-        // console.log("success", data);
-    })
-    .catch(error => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        errorMessage();
-        //formElement.reset();
-       
-    });
-});
 
 
 
@@ -2429,7 +2440,7 @@ formElement.addEventListener('submit', (e) => {
     //        if (response.ok){
     //         return response.json()
     //        }
-           
+
     //     })
     //     .then(data => {
     //         // console.log("success",data)
@@ -2440,34 +2451,34 @@ formElement.addEventListener('submit', (e) => {
     //     });
 
     // });
-//         const ajax_data = ()=>{
-//             $.ajax({
-//         url: '/new_entry/',  // Replace with your server endpoint
-//         type: 'POST',
-//         data: {
-//             body_parts_data: getBodySelectedItems(),  // Convert to JSON string
-//             spare_parts_data: getSpareSelectedItems(),
-//             cng_parts_data: getCngSelectedItems(),
-//             kabli_parts_data: getKabaliSelectedItems(),
-//             decoration_parts_data: getDecorationSelectedItems(),
-//             silencer_parts_data: getSilencerSelectedItems(),
-//             csrfmiddlewaretoken: '{{ csrf_token }}' // If using Django
-//         },
-//         success: function (response) {
-//             // console.log(response);
+    //         const ajax_data = ()=>{
+    //             $.ajax({
+    //         url: '/new_entry/',  // Replace with your server endpoint
+    //         type: 'POST',
+    //         data: {
+    //             body_parts_data: getBodySelectedItems(),  // Convert to JSON string
+    //             spare_parts_data: getSpareSelectedItems(),
+    //             cng_parts_data: getCngSelectedItems(),
+    //             kabli_parts_data: getKabaliSelectedItems(),
+    //             decoration_parts_data: getDecorationSelectedItems(),
+    //             silencer_parts_data: getSilencerSelectedItems(),
+    //             csrfmiddlewaretoken: '{{ csrf_token }}' // If using Django
+    //         },
+    //         success: function (response) {
+    //             // console.log(response);
 
-//         },
-//         error: function (error) {
+    //         },
+    //         error: function (error) {
 
-//         }
-//     });
-    
-// }
-// // console.log(ajax_data.data)
-// return ajax_data
-    
-        
-    
+    //         }
+    //     });
+
+    // }
+    // // console.log(ajax_data.data)
+    // return ajax_data
+
+
+
 
     // function saveSparePartsSelection() {
     //     const selectedSpareParts = getSelectedSpareParts();
@@ -2501,7 +2512,7 @@ formElement.addEventListener('submit', (e) => {
 
 
 
-     
+
 
 
 
@@ -2517,7 +2528,16 @@ formElement.addEventListener('submit', (e) => {
     cngParts($(".cng_parts"))
     decorationParts($('.decoration_parts'))
     silencerParts($('.silencer_parts'))
-    
+
+    $(document).ready(() => {
+       const btn =  $("button").filter(function () {
+            return $(this).text().trim() === "Add Row";
+        });
+        btn.css("color", "#fff");
+        btn.css("border-radius", "5px");
+       
+    })
+
 </script>
 
 </html>
