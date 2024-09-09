@@ -142,7 +142,7 @@ def alertLowProduct(request):
         for model_class in [Oil_Companies, Oil_Filter, Air_Filter, AC_Filter, Body_Parts, Spare_Parts, CNG_Parts, Kabli_Parts, Decoration, Whole_Sale, Silencer]:
             for data in model_class.objects.all():
                 if data.total_products < 10:
-                    messages.append(f"The product {data.name} is running low. Please restock ASAP")
+                    messages.append(f"The product {data.name} is running low. Only {data.total_products} left. Please restock ASAP")
 
         return JsonResponse({"messages": messages})
     except Exception as e:

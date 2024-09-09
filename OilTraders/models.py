@@ -9,7 +9,7 @@ class Oil_Companies(models.Model):
     purchase_price  = models.CharField(max_length=200, null=True, blank=True)
     sale_price = models.CharField(max_length=200, null=True,blank=True) 
     rack_no = models.CharField(max_length=100,blank=True,null=True,default=0)
-    total_products = models.IntegerField(null=True,blank=True,default=0)
+    total_products = models.PositiveIntegerField(null=True, blank=True, default=0)
 
     def calculate_profit(self):
         try:
@@ -34,7 +34,7 @@ class Spare_Parts(models.Model):
     purchase_price  = models.CharField(max_length=200,null=True,blank=True)
     sale_price = models.CharField(max_length=200,null=True,blank=True)
     rack_no = models.CharField(max_length=100,blank=True,null=True,default=0)
-    total_products = models.IntegerField(null=True,blank=True,default=0)
+    total_products = models.PositiveIntegerField(null=True, blank=True, default=0)
 
     def calculate_profit(self):
         try:
@@ -59,7 +59,7 @@ class Body_Parts(models.Model):
     purchase_price  = models.CharField(max_length=200,null=True,blank=True)
     sale_price = models.CharField(max_length=200,null=True,blank=True)
     rack_no = models.CharField(max_length=100,blank=True,null=True,default=0)
-    total_products = models.IntegerField(null=True,blank=True,default=0)
+    total_products = models.PositiveIntegerField(null=True, blank=True, default=0)
 
     def calculate_profit(self):
         try:
@@ -84,7 +84,7 @@ class CNG_Parts(models.Model):
     purchase_price  = models.CharField(max_length=200,null=True,blank=True)
     sale_price = models.CharField(max_length=200,null=True,blank=True)
     rack_no = models.CharField(max_length=100,blank=True,null=True,default=0)
-    total_products = models.IntegerField(null=True,blank=True,default=0)
+    total_products = models.PositiveIntegerField(null=True, blank=True, default=0)
 
     
     def calculate_profit(self):
@@ -111,7 +111,7 @@ class Kabli_Parts(models.Model):
     purchase_price  = models.CharField(max_length=200,null=True,blank=True)
     sale_price = models.CharField(max_length=200,null=True,blank=True)
     rack_no = models.CharField(max_length=100,blank=True,null=True,default=0)
-    total_products = models.IntegerField(null=True,blank=True,default=0)
+    total_products = models.PositiveIntegerField(null=True, blank=True, default=0)
 
     def calculate_profit(self):
         try:
@@ -136,7 +136,7 @@ class Silencer(models.Model):
     purchase_price  = models.CharField(max_length=200,null=True,blank=True)
     sale_price = models.CharField(max_length=200,null=True,blank=True)
     rack_no = models.CharField(max_length=100,blank=True,null=True,default=0)
-    total_products = models.IntegerField(null=True,blank=True,default=0)
+    total_products = models.PositiveIntegerField(null=True, blank=True, default=0)
 
     def calculate_profit(self):
         try:
@@ -161,7 +161,7 @@ class Decoration(models.Model):
     purchase_price  = models.CharField(max_length=200,null=True,blank=True)
     sale_price = models.CharField(max_length=200,null=True,blank=True)
     rack_no = models.CharField(max_length=100,blank=True,null=True,default=0)
-    total_products = models.IntegerField(null=True,blank=True,default=0)
+    total_products = models.PositiveIntegerField(null=True, blank=True, default=0)
 
     def calculate_profit(self):
         try:
@@ -186,7 +186,7 @@ class Oil_Filter(models.Model):
     purchase_price  = models.CharField(max_length=200,null=True,blank=True)
     sale_price = models.CharField(max_length=200,null=True,blank=True)
     rack_no = models.CharField(max_length=100,blank=True,null=True,default=0)
-    total_products = models.IntegerField(null=True,blank=True,default=0)
+    total_products = models.PositiveIntegerField(null=True, blank=True, default=0)
 
     def calculate_profit(self):
         try:
@@ -210,7 +210,7 @@ class Air_Filter(models.Model):
     purchase_price  = models.CharField(max_length=200,null=True,blank=True)
     sale_price = models.CharField(max_length=200,null=True,blank=True)
     rack_no = models.CharField(max_length=100,blank=True,null=True,default=0)
-    total_products = models.IntegerField(null=True,blank=True,default=0)
+    total_products = models.PositiveIntegerField(null=True, blank=True, default=0)
 
     def calculate_profit(self):
         try:
@@ -235,7 +235,7 @@ class AC_Filter(models.Model):
     purchase_price  = models.CharField(max_length=200,null=True,blank=True)
     sale_price = models.CharField(max_length=200,null=True,blank=True)
     rack_no = models.CharField(max_length=100,blank=True,null=True,default=0)
-    total_products = models.IntegerField(null=True,blank=True,default=0)
+    total_products = models.PositiveIntegerField(null=True, blank=True, default=0)
 
     def calculate_profit(self):
         try:
@@ -260,7 +260,7 @@ class Whole_Sale(models.Model):
     purchase_price  = models.CharField(max_length=200,null=True,blank=True)
     sale_price = models.CharField(max_length=200,null=True,blank=True)
     rack_no = models.CharField(max_length=100,blank=True,null=True,default=0)
-    total_products = models.IntegerField(null=True,blank=True,default=0)
+    total_products = models.PositiveIntegerField(null=True, blank=True, default=0)
 
     def calculate_profit(self):
         try:
