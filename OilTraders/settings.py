@@ -65,6 +65,8 @@ CORS_ALLOW_HEADERS = [
     'content-type',
     'X-Requested-With',
     'X-CSRFToken',
+    "cors",
+    "origin"
 ]
 
 ROOT_URLCONF = 'OilTraders.urls'
