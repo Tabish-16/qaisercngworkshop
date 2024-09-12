@@ -219,7 +219,7 @@ def product_subtract(data):
         print("Whole sale error:", e)
 
 
-
+@csrf_exempt
 def new_entry(request):
     
     if request.method == "POST":
