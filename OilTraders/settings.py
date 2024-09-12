@@ -39,7 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'OilTraders',
+<<<<<<< HEAD
      'corsheaders',
+=======
+    'corsheaders',
+>>>>>>> 300bbe79bd1d7a29fc5432821369dcf5f218a192
     # 'background_task',
 ]
 
@@ -61,6 +65,11 @@ CORS_ALLOWED_ORIGINS = [
 ]
 CORS_ALLOW_ALL_ORIGINS = True
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 300bbe79bd1d7a29fc5432821369dcf5f218a192
 ROOT_URLCONF = 'OilTraders.urls'
 
 TEMPLATES = [
