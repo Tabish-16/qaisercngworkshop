@@ -2476,7 +2476,7 @@
 
         {% comment %} saveData(formObject); {% endcomment %}
         
-        fetch('https://qaisercngworkshop.onrender.com/new_entry/', {
+        fetch('/new_entry/', {
             method: 'POST',
             body: JSON.stringify(formObject), // Convert the entire formObject to JSON
             headers: {
