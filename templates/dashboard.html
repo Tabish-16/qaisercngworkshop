@@ -75,7 +75,9 @@
     </nav>
 
 
+    <div class="msg-box" class="" style="margin-top:82px;">
 
+    </div>
 
     <!-- <div class="flex justify-center items-center flex-col">
         <h1 class="text-center my-4 text-3xl text-gray-800 font-bold">Products Information</h1>
@@ -458,7 +460,18 @@
                     </div>
                 </div>
 
+                <hr class="my-4 border-2 border-gray-300 ">
+                <h1 class="text-center my-4 text-3xl text-gray-800 font-bold">Labour</h1>
+                <div id="labour_container" class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
+                    <div class="flex flex-col">
+                        <label for="labour" class="text-gray-700 font-semibold mb-2">Labour</label>
+                        <input type="number" id="labour" name="labour"
+                            class="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="500" >
+                    </div>
+                    
+                </div>
 
                 <div class="my-6 text-center text-3xl ">
                     <h1 class="text-gray-800"><b>Total:</b> <span id="total-price" class="text-red-600"></span></h1>
@@ -627,27 +640,27 @@
                 throw new Error('Network response was not ok');
             }
             const data = await response.json();
-
+    
             const messages = data.messages;
             if (messages && messages.length > 0) {
-                const alertContainer = document.querySelector('.msg-box');
-
+                const alertContainer = document.querySelector('.msg-box'); // Use querySelector for a single element
+    
                 messages.forEach((message) => {
                     const newMessage = document.createElement("div");
                     newMessage.className = "p-4 mb-4 text-sm text-center text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800";
                     newMessage.textContent = message;
-
+    
                     // Optionally, add a close button to dismiss the alert
                     const closeButton = document.createElement("button");
                     closeButton.className = "ml-auto -mx-1.5 -my-1.5 bg-red-100 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 dark:bg-red-200 dark:text-red-800 dark:hover:bg-red-300";
                     closeButton.innerHTML = '<span class="sr-only">Close</span><svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414 1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>';
-                    closeButton.onclick = function () {
+                    closeButton.onclick = function() {
                         newMessage.remove();
                     };
-
+    
                     newMessage.appendChild(closeButton);
-                    alertContainer.appendChild(newMessage);
-
+                    alertContainer.appendChild(newMessage); // Append to the single msg-box element
+    
                     // Optionally, remove the message after a delay
                     setTimeout(() => {
                         newMessage.remove();
@@ -658,7 +671,7 @@
             console.error('Error fetching message:', error);
         }
     }
-
+    
     window.onload = () => {
         loadProductMsg();
     }
@@ -2360,6 +2373,81 @@
     //     return selectedValues;
     // }
 
+    function getLabour() {
+        labour_data = []
+        labour = document.getElementById('labour').value
+        data = {
+            'price':parseInt(labour)
+        }
+        labour_data.push(data)
+        return labour_data
+    }
+
+
+{% comment %} 
+    function saveData(data) {
+        if (!navigator.onLine) {
+            console.log("No internet connection. Saving data locally.");
+            saveDataLocally(data); // Call function to store data locally
+        } else {
+            console.log("Internet connection available. Saving data to server.");
+            saveDataToServer(data); // Call function to save data to the server
+        }
+    }
+
+    function saveDataLocally(data) {
+        let unsavedData = localStorage.getItem('unsavedData');
+    
+        // If there's already unsaved data, merge it with the new data
+        unsavedData = unsavedData ? JSON.parse(unsavedData) : [];
+        unsavedData.push(data);
+        console.log("data--->>",data)
+    
+        localStorage.setItem('unsavedData', JSON.stringify(unsavedData));
+        console.log("Data saved locally:", unsavedData);
+    }
+
+
+    function saveDataToServer(data) {
+        $.ajax({
+            type: 'POST',
+            url: '/new_entry/',  // Your API endpoint
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                "Content-Type": "application/json",
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            data: JSON.stringify(data),
+            success: function(response) {
+                console.log("Data saved to the server successfully:", response);
+                // Remove data from localStorage once saved
+                localStorage.removeItem('unsavedData');
+            },
+            error: function(error) {
+                console.log("Error saving data to the server. Saving data locally instead.");
+                saveDataLocally(data); // Save locally if server request fails
+            }
+        });
+    }
+
+    function syncDataWithServer() {
+        let unsavedData = localStorage.getItem('unsavedData');
+    
+        if (unsavedData) {
+            unsavedData = JSON.parse(unsavedData);
+    
+            unsavedData.forEach((data) => {
+                // Sync each entry to the server
+                saveDataToServer(data);
+            });
+        }
+    }
+
+    window.addEventListener('online', function() {
+        console.log("Internet connection restored. Syncing local data to the server.");
+        syncDataWithServer();
+    }); {% endcomment %}
+
     const formElement = document.getElementById("my-form");
 
     formElement.addEventListener('submit', (e) => {
@@ -2384,8 +2472,11 @@
         formObject.air_filter_data = JSON.stringify(getAirFilterSelectedItems());
         formObject.ac_filter_data = JSON.stringify(getACSelectedItems());
         formObject.whole_sale_data = JSON.stringify(getWholeSaleSelectedItems());
+        formObject.labour = JSON.stringify(getLabour());
 
-        fetch('/new_entry/', {
+        {% comment %} saveData(formObject); {% endcomment %}
+        
+        fetch('https://qaisercngworkshop.onrender.com/new_entry/', {
             method: 'POST',
             body: JSON.stringify(formObject), // Convert the entire formObject to JSON
             headers: {
@@ -2400,7 +2491,6 @@
                 loadProductMsg()
                 $('#table_div')
                 formElement.reset();
-                window.location.reload()
 
                 // Reset the form after successful submission
                 // console.log("success", data);

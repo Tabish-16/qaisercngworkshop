@@ -38,6 +38,7 @@
     
 </style>
 {% if user.is_authenticated  %}
+{% if user.is_superuser %}
 <body>
 <nav class="bg-gray-900 dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600 z-50">
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -115,8 +116,10 @@
                 </tfoot>
             </table>
             <div class="mt-4 space-y-2 text-xl">
+                <h2 class="text-right text">Total Labour: {{ labour }} /-</h2>
                 <h2 class="text-right text">Total Sales: {{ total_sales }} /-</h2>
             <h2 class="text-right text">Total Profit: {{ total_profit }} /-</h2>
+            <h2 class="text-right text">Total Profit + Labour: {{ total_profit }} + {{labour}} = {{labour_profit}} /-</h2>
             </div>
           
         </div>
@@ -197,8 +200,9 @@
         
     </script>
     {% else %}
-<p>You are not logged in.</p>
-<a href="{% url 'login' %}">Login</a>
+<p>You do not have access.</p>
+<a href="{% url 'home' %}">Login</a>
+{% endif %}
 {% endif %}
 </body>
 </html>

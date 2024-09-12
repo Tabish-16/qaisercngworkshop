@@ -303,6 +303,7 @@ class NewEntry(models.Model):
     decorationEntry = models.JSONField(null=True,default=dict)
     silencerEntry = models.JSONField(null=True,default=dict)
     wholeSaleEntry = models.JSONField(null=True,default=dict)
+    labour = models.JSONField(null=True,default=dict)
     spare_parts = models.ForeignKey(Spare_Parts,on_delete=models.CASCADE,null=True,blank=True)
     body_parts = models.ForeignKey(Body_Parts,on_delete=models.CASCADE,null=True,blank=True)
     cng_parts = models.ForeignKey(CNG_Parts,on_delete=models.CASCADE,null=True,blank=True)

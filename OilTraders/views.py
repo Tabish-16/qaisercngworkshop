@@ -224,6 +224,7 @@ def new_entry(request):
     if request.method == "POST":
         try:
             data = json.loads(request.body.decode())
+            print(data)
             try:
                 product_subtract(data)
             except Exception as e:
@@ -247,7 +248,8 @@ def new_entry(request):
                 kabliPartEntry=json.loads(data.get('kabli_parts_data', {})),
                 decorationEntry=json.loads(data.get('decoration_parts_data', {})),
                 silencerEntry=json.loads(data.get('silencer_parts_data', {})),
-                wholeSaleEntry=json.loads(data.get('whole_sale_data', {}))
+                wholeSaleEntry=json.loads(data.get('whole_sale_data', {})),
+                labour=json.loads(data.get('labour', {}))
             )
 
             saveData.save()
@@ -371,6 +373,15 @@ def generate_report(request):
             items_sold[k]['profit'] = current_item_profit
             final_total_profit += current_item_profit
         
+        total_labour = 0
+        labour_data =  NewEntry.objects.all()
+        for data in labour_data:
+            current_labour = data.labour
+            for price in current_labour:
+                
+                labour_value = price.get('price',0)
+                total_labour += labour_value
+        labour_profit = final_total_profit + total_labour    
         context = {
             'total_qty':final_total_item_qty,
             "total_unit_sale_price":final_total_unit_sale_price,
@@ -379,6 +390,8 @@ def generate_report(request):
             'total_profit': final_total_profit,
             'report_data': items_sold.values(),
             'month': month,
+            'labour':total_labour,
+            'labour_profit':labour_profit
         }
 
         return render(request,"sales_report.html",context)
