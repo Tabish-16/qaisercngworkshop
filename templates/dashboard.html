@@ -633,7 +633,7 @@
 
 
 
-    const loadProductMsg = async () => {
+   const loadProductMsg = async () => {
         try {
             const response = await fetch('/alertLowProduct/');
             if (!response.ok) {
@@ -643,7 +643,7 @@
     
             const messages = data.messages;
             if (messages && messages.length > 0) {
-                const alertContainer = document.querySelector('.msg-box'); // Use querySelector for a single element
+                const alertContainers = document.querySelectorAll('.msg-box'); // Select all msg-box divs
     
                 messages.forEach((message) => {
                     const newMessage = document.createElement("div");
@@ -659,11 +659,20 @@
                     };
     
                     newMessage.appendChild(closeButton);
-                    alertContainer.appendChild(newMessage); // Append to the single msg-box element
     
-                    // Optionally, remove the message after a delay
+                    // Append the message to each msg-box
+                    alertContainers.forEach((alertContainer) => {
+                        const messageClone = newMessage.cloneNode(true); // Clone the message for each container
+                        alertContainer.appendChild(messageClone);
+                    });
+    
+                    // Optionally, remove the messages after a delay
                     setTimeout(() => {
-                        newMessage.remove();
+                        alertContainers.forEach((alertContainer) => {
+                            while (alertContainer.firstChild) {
+                                alertContainer.removeChild(alertContainer.firstChild); // Remove all messages after 20 seconds
+                            }
+                        });
                     }, 20000);
                 });
             }
