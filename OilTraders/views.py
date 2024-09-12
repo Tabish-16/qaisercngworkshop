@@ -221,6 +221,7 @@ def product_subtract(data):
 
 
 def new_entry(request):
+    
     if request.method == "POST":
         try:
             data = json.loads(request.body.decode())
