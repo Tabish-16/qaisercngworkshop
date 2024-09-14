@@ -548,16 +548,23 @@ def bill_pdf(request, pk):
     
     def add_part_entries(part_entries):
         nonlocal total
+        if part_entries is None:
+            part_entries = []  # Ensure part_entries is an empty list if None
         if isinstance(part_entries, list):  # Ensure part_entries is a list
             for data in part_entries:
                 if isinstance(data, dict):  # Ensure data is a dict
                     pdf.set_x(2)
                     pdf.set_font("Arial", "B", size=10)
-                    pdf.cell(35, 7, data.get('name', ''))
+                    pdf.cell(35, 7, data.get('name', 'Labour'))
                     pdf.set_font("Arial", size=10)
                     pdf.cell(10, 7, str(data.get('qty', 0)), align="C")
                     pdf.cell(30, 7, str(data.get('price', 0)) + " /-", ln=True, align="R")
-                    total += int(data.get('price', 0))  # Safely convert to int
+                    
+                    # Safely handle None values
+                    price = data.get('price', 0)
+                    if price is None:
+                        price = 0
+                    total += int(price)  # Safely convert to int
 
     # Add totals for all part entries
     add_part_entries(bill.bodyPartEntry)
@@ -570,7 +577,13 @@ def bill_pdf(request, pk):
     add_part_entries(bill.ac_filter)  # Ensure this is iterable and correct
     add_part_entries(bill.air_filter)  # Ensure this is iterable and correct
     add_part_entries(bill.wholeSaleEntry)  # Ensure this is iterable and correct
-        
+    if bill.labour:
+        add_part_entries(bill.labour)  # Ensure this is iterable and correct
+
+    
+    
+    
+            
     pdf.set_font("Arial", "B",size=10)
     pdf.cell(0, 4, "----------------------------------------------------", ln=True, align="C")
     
