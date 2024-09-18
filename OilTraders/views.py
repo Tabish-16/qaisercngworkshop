@@ -499,100 +499,81 @@ def invoice_pdf(request,pk):
 
 
 
+
 class POSBill(FPDF):
     def __init__(self):
         super().__init__('P', 'mm', (80, 150))
-        self.set_font('Arial', '', 12)
+        self.set_font('Arial', '', 10)
         
-    def header(self):
-        self.set_fill_color(28, 28, 28) 
-        self.rect(0,0,80,20,"DF")
-        self.image("static/assets/QCW-removebg-preview.png", x=5, y=2.5, w=25, h=15)
-        self.set_text_color(122, 122, 122)
-        self.text(57,9,"Qaiser")
-        self.set_font("Arial","B" ,size=10)
-        self.text(50,15," CNG Workshop")
-        self.set_text_color(0, 0, 0)
-        self.set_font("Arial", "B",size=10)
-        self.set_y(20)
-        self.set_x(2)
-        self.set_font("Arial", "B",size=10)
-        self.cell(35, 10, f"Items",)
-        self.cell(10, 10, f"Qty",)
-        self.cell(30, 10, "Price", ln=True, align="R")
+    # Remove header and footer methods
 
-    def footer(self):
-        self.set_y(40)
-        self.set_fill_color(28, 28, 28) 
-        self.rect(0,130,80,20,"DF")
-        self.set_text_color(122, 122, 122)
-        self.set_font("Arial", "B",size=9)
-        self.text(3,135,"Contact Us")
-        self.text(3,139,"0300-8339202")
-        self.text(50,135,"Our Location")
-        self.text(37,139,"G.T Road Wah Garden Pull")
+    def print_bill_items(self, bill):
+        total = 0
+        
+        def add_part_entries(part_entries):
+            nonlocal total
+            if isinstance(part_entries, list):  # Ensure part_entries is a list
+                for data in part_entries:
+                    if isinstance(data, dict):  # Ensure data is a dict
+                        self.set_x(2)
+                        self.set_font("Arial", "B", size=9)
+                        self.cell(30, 5, data.get('name', ''))
+                        self.set_font("Arial", size=9)
+                        self.cell(16, 5, str(data.get('qty', 0)), align="C")
+                        self.cell(30, 5, str(data.get('price', 0)) + " /-", ln=True, align="C")
+                        total += int(data.get('price', 0))  # Safely convert to int
+
+        # Add totals for all part entries
+        add_part_entries(bill.bodyPartEntry)
+        add_part_entries(bill.sparePartEntry)
+        add_part_entries(bill.cngPartEntry)
+        add_part_entries(bill.kabliPartEntry)
+        add_part_entries(bill.decorationEntry)
+        add_part_entries(bill.oil_companies)  # Ensure this is iterable and correct
+        add_part_entries(bill.oil_filter)  # Ensure this is iterable and correct
+        add_part_entries(bill.ac_filter)  # Ensure this is iterable and correct
+        add_part_entries(bill.air_filter)  # Ensure this is iterable and correct
+        add_part_entries(bill.wholeSaleEntry)  # Ensure this is iterable and correct
+
+        self.set_font("Arial", "B", size=10)
+        self.cell(0, 4, "----------------------------------------------------", ln=True, align="C")
+        self.cell(35, 5, f"Total", align="L")
+        self.set_font("Arial", size=10)
+        self.cell(40, 5, str(total) + "/-", ln=True)
 
 def bill_pdf(request, pk):
     # Create instance of POSBill
     pdf = POSBill()
     
+    
     # Add a page
     pdf.add_page()
-
+    pdf.set_y(3)
+    pdf.set_font("Arial", "B", size=14)
+    pdf.cell(60,5,"Qaiser CNG Workshop",ln=True,align="C")
+    pdf.set_font("Arial", "B", size=10)
+    pdf.cell(60,5,"0300-8339202",ln=True,align="C")
+    pdf.cell(60,5,"0317-8859202",ln=True,align="C")
+    pdf.set_font("Arial", "B", size=10)
+    pdf.cell(60,5,"G.T Road Wah garden Pull",ln=True,align="C")
+    pdf.ln(2)
     # Set font
-    pdf.set_font("Arial","B" ,size=14)
+    pdf.set_font("Arial", "", size=9)
     
     bill = NewEntry.objects.get(id=pk)
+    pdf.set_x(2)
+    pdf.cell(60,5,f"Customer Name : {bill.name}",ln=True,align="L")
+    pdf.set_x(2)
+    pdf.cell(60,5,f"Date : {bill.date}",ln=True,align="L")
+    pdf.set_x(2)
+    # Add content (Items, Qty, Price)
+    pdf.set_font("Arial", "B", size=9)
+    pdf.cell(30, 5, "Items", align="C",border=True)
+    pdf.cell(16, 5, "Qty", align="C",border=True)
+    pdf.cell(30, 5, "Amount", ln=True, align="C",border=True)
     
-    # Add content
-    total = 0
-    
-    def add_part_entries(part_entries):
-        nonlocal total
-        if part_entries is None:
-            part_entries = []  # Ensure part_entries is an empty list if None
-        if isinstance(part_entries, list):  # Ensure part_entries is a list
-            for data in part_entries:
-                if isinstance(data, dict):  # Ensure data is a dict
-                    pdf.set_x(2)
-                    pdf.set_font("Arial", "B", size=10)
-                    pdf.cell(35, 7, data.get('name', 'Labour'))
-                    pdf.set_font("Arial", size=10)
-                    pdf.cell(10, 7, str(data.get('qty', 0)), align="C")
-                    pdf.cell(30, 7, str(data.get('price', 0)) + " /-", ln=True, align="R")
-                    
-                    # Safely handle None values
-                    price = data.get('price', 0)
-                    if price is None:
-                        price = 0
-                    total += int(price)  # Safely convert to int
-
-    # Add totals for all part entries
-    add_part_entries(bill.bodyPartEntry)
-    add_part_entries(bill.sparePartEntry)
-    add_part_entries(bill.cngPartEntry)
-    add_part_entries(bill.kabliPartEntry)
-    add_part_entries(bill.decorationEntry)
-    add_part_entries(bill.oil_companies)  # Ensure this is iterable and correct
-    add_part_entries(bill.oil_filter)  # Ensure this is iterable and correct
-    add_part_entries(bill.ac_filter)  # Ensure this is iterable and correct
-    add_part_entries(bill.air_filter)  # Ensure this is iterable and correct
-    add_part_entries(bill.wholeSaleEntry)  # Ensure this is iterable and correct
-    if bill.labour:
-        add_part_entries(bill.labour)  # Ensure this is iterable and correct
-
-    
-    
-    
-            
-    pdf.set_font("Arial", "B",size=10)
-    pdf.cell(0, 4, "----------------------------------------------------", ln=True, align="C")
-    
-    pdf.set_font("Arial", "B",size=10)
-    pdf.cell(35, 5, f"Total", align="L")
-    
-    pdf.set_font("Arial", size=10)
-    pdf.cell(40, 5, str(total) + "/-", ln=True)
+    # Print all items from the bill
+    pdf.print_bill_items(bill)
     
     # Get the PDF content as a string
     pdf_output = pdf.output(dest='S').encode('latin1')
