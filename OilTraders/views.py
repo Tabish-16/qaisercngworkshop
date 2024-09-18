@@ -381,6 +381,7 @@ def generate_report(request):
             for price in current_labour:
                 
                 labour_value = price.get('price',0)
+                labour_value = labour_value if labour_value is not None else 0
                 total_labour += labour_value
         labour_profit = final_total_profit + total_labour    
         context = {
